@@ -6,39 +6,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AquaTech | Login</title>
+    <title>Musify | Login</title>
 
     <script src="./js/sessao.js"></script>
 
-    <link rel="stylesheet" href="./css/estilo.css">
+    <link rel="stylesheet" href="./css/style.css">
     <link rel="icon" href="./assets/icon/favicon2.ico">
     <link rel="preconnect" href="https://fonts.gstatic.com">
 </head>
 
 <body>
 
-    <!--Header-->
+    <!-- Header inicio -->
+    <div class="padding-header">
+        <div class="header">
 
-    <div class="header">
-        <div class="container">
-            <h1 class="titulo">AquaTech</h1>
-            <ul class="navbar">
-                <li>
-                    <a href="index.html">Inicial</a>
-                </li>
-                <li>
-                    <a href="simulador.html">Simulador</a>
-                </li>
-                <li>|</li>
-                <li class="agora">
-                    <a href="#">Login</a>
-                </li>
-                <li>
-                    <a href="cadastro.html">Cadastro</a>
-                </li>
-            </ul>
+            <div class="container">
+                <h1 class="titulo">Musify</h1>
+                <ul class="navbar">
+                    <li class="">
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="simulador.html">Explorar</a>
+                    </li>
+                    <li>
+                        <a href="login.html">Beneficios</a>
+                    </li>
+                    <li>
+                        <a href="cadastro.html">Sobre Mim</a>
+                    </li>
+                </ul>
+
+                <div class="btnheader">
+                    <a href="cadastro.html" id="btnCadastro">Cadastro</a>
+                    <a href="login.html" class="btnRoxo" id="btnLogin">Login</a>
+
+                </div>
+            </div>
         </div>
     </div>
+    <!-- Header fim -->
 
 
     <div class="login">
@@ -60,6 +68,10 @@
                         <input id="senha_input" type="password" placeholder="******">
                     </div>
                     <button class="botao" onclick="entrar()">Entrar</button>
+                    <div class="link-login">
+                        Não tem uma conta?
+                        <a href="cadastro.html">Cadastre-se</a>
+                    </div>
                 </div>
 
                 <div id="div_aguardar" class="loading-div">
@@ -68,16 +80,43 @@
 
                 <div id="div_erros_login"></div>
             </div>
+
+            <div class="painel-login">
+                <div class="texto-login">
+                    <h3>Acompanhe sua<br>jornada <span>musical</span></h3>
+                    <p>Acesse os guias, os quizzes e o seu dashboard.</p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!--footer inicio-->
+    <!-- Footer Inicio -->
     <div class="footer">
         <div class="container">
-            <h4>Feito com amor por aluno &hearts; SPTech &copy; 2023-2026</h4>
+            <div class="logoFooter">
+                <img src="assets/icon/favicon2.ico" alt="">
+                <p>Um espaço para ouvir com curiosidade, entender a música e aprender no seu tempo.</p>
+
+            </div>
+
+            <div class="linksFooter">
+                <span class="tituloFooter">Explore</span>
+                <a href="">Home</a>
+                <a href="">A música e a mente</a>
+                <a href="">Aprenda música</a>
+                <a href="">Quizzes</a>
+
+            </div>
+            <div class="ctaFooter">
+                <span class="tituloFooter">Sobre o criador</span>
+                <a href="">Linkedin</a>
+                <a href="">Github</a>
+                <a href="">vinicius.asouza@sptech.school</a>
+
+            </div>
         </div>
     </div>
-    <!--footer fim-->
+    <!-- Footer fim -->
 
 </body>
 

@@ -38,6 +38,7 @@ body {
     align-items: center;
     flex: 1;
     justify-content: space-between;
+    height: 10vh;
     width: 90%;
     position: fixed;
     background-color: rgba(22, 28, 66, 0.964);
@@ -54,6 +55,12 @@ body {
 .header a {
   text-decoration: none;
   color: #fff;
+}
+
+.header a:hover{
+  color: #7138D8;
+  font-size: 17px;
+  
 }
 
 .agora {
@@ -89,8 +96,8 @@ body {
   border-radius: 3vh;
 }
 
-#btnLogin{
-
+#btnLogin:hover{
+  color: white;
 }
 /* BANNER */
 
@@ -254,71 +261,148 @@ body {
 /* LOGIN */
 
 .login {
-  height: var(--tamanho-login);
-  background-image: url('../assets/imgs/bg-jelly-fish-para-home.png');
-  background-size: cover;
+  background-color: #0D1230;
+  min-height: 130vh;
 }
 
 .login .container {
+  align-items: stretch;
   justify-content: center;
-  align-items: center;
-  height: 100%;
+  padding: 130px 0 60px 0;
+  width: 75%;
+  max-width: 1000px;
 }
 
-.card {
+/* card branco */
+.login .card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 50%;
-  background-color: #e5e5e5;
+  min-height: 540px;
+  padding: 30px 0;
+  box-sizing: border-box;
+  background-color: #fff;
+  color: #0D1230;
   border-radius: 10px;
+}
+
+.login .card h2 {
+  width: 80%;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.login .card-cadastro h2 {
+  text-align: center;
+  font-size: 24px;
+}
+
+/* painel com a foto */
+.painel-login,
+.cadastro-intro {
+  flex: 1;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  color: palevioletred;
-  flex-direction: column;
-  height: fit-content;
-  padding: 20px 0;
+  justify-content: center;
+  background-image: url('../assets/img-teclado/background-main.png');
+  background-size: cover;
+  background-position: center;
 }
 
-.card h2 {
-  margin: 0;
+/* painel a direita - login */
+.painel-login {
+  margin-left: -50px;
+  padding-left: 50px;
+  border-radius: 50px 10px 10px 50px;
+}
+
+/* painel a esquerda - cadastro */
+.cadastro-intro {
+  padding-right: 50px;
+  border-radius: 10px 0 0 10px;
+}
+
+.login .card-cadastro {
+  margin-left: -50px;
+  border-radius: 50px 10px 10px 50px;
+}
+
+/* caixinha transparente */
+.texto-login,
+.cadastro-texto {
+  width: 70%;
+  padding: 30px;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.texto-login h3,
+.cadastro-texto h3 {
+  margin: 0 0 15px 0;
   font-size: 30px;
+  font-weight: 500;
 }
 
+.texto-login h3 span,
+.cadastro-texto h3 span {
+  color: #a58bff;
+}
+
+.texto-login p,
+.cadastro-texto p {
+  margin: 0;
+  font-size: 13px;
+}
+
+/* formulário */
 .formulario {
-  display: flex;
-  height: 90%;
   width: 80%;
-  justify-content: space-around;
-  flex-direction: column;
 }
 
 .formulario span {
-  font-size: 15px;
-  font-weight: 800;
+  font-size: 12px;
+  color: #8a8aa3;
 }
 
 .formulario input {
-  border: 2px solid #32b9cd;
-  text-align: center;
-  border-radius: 10px;
-  margin: 0;
+  border: 1px solid #dcdce6;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 13px;
+  text-align: left;
+  box-sizing: border-box;
 }
 
-.formulario select {
-  border: 2px solid #32b9cd;
-  background-color: white;
-  color: gray;
-  height: 36px;
+.formulario .botao {
+  width: 100%;
+  height: 42px;
+  background-color: #7B5CFA;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.link-login {
   text-align: center;
-  border-radius: 10px;
-  margin: 0;
+  font-size: 12px;
+  margin-top: 15px;
+}
+
+.link-login a {
+  color: #7B5CFA;
+  font-weight: 600;
 }
 
 .campo {
   display: flex;
   flex-direction: column;
-  justify-content: start;
   padding: 5px 0;
 }
+
+/*           */
 
 .botao {
   cursor: pointer;

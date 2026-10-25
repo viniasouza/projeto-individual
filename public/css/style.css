@@ -40,7 +40,8 @@ body {
     justify-content: space-between;
     width: 90%;
     position: fixed;
-    background-color: #0D1230;
+    background-color: rgba(22, 28, 66, 0.964);
+    border: 1px solid #2b3270;
     border-radius: 50px;
 }
 
@@ -89,9 +90,7 @@ body {
 }
 
 #btnLogin{
-  background-color: #7138D8;
-  padding: 1vh 3vh 1vh 3vh;
-  border-radius: 2vh;
+
 }
 /* BANNER */
 
@@ -131,25 +130,55 @@ body {
 .banner .container span {
   font-weight: 800;
 }
+.btnBanner{
+  display: flex;
+}
+
+.btnBanner a{
+  text-decoration: none;
+  color: #fff;
+  
+}
+
+/* Estilização padrão dos botões */
+.btnRoxo{
+  background-color: #7138D8;
+  padding: 1vh 3vh 1vh 3vh;
+  border-radius: 2vh;
+}
+
+.btnTransparente{
+  border: solid 1px #7138D8;
+  padding: 1vh 3vh 1vh 3vh;
+
+  border-radius: 3vh;
+
+}
+
 
 /* MISSÃO VISÃO VALORES */
 
 .social {
   background-color: #e5e5e5;
   display: flex;
+  height: 80vh;
 }
 
 .social .container {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  gap: 10vh;
 }
-
-.social .container .titulo{
-
-
+.texto{
+  width: 60%;
+}
+.social .container .texto h1 span{
+  color: #7138D8;
 }
 
 .box img {
-  width: 170px;
+  width: 80px;
 }
 
 .social .container .boxes {
@@ -169,10 +198,15 @@ body {
   align-items: center;
 }
 
+
+.impactoMusica{
+  height: 100vh;
+  background-color: #0D1230;
+}
 /* FOOTER */
 
 .footer {
-  background-color: #32b9cd;
+  background-color: #e5e5e5;
   height: 150px;
   color: #fff;
   display: flex;
@@ -180,8 +214,37 @@ body {
 }
 
 .footer .container {
-  justify-content: center;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+}
+.logoFooter{
+  width: 25%;
+  color: #0D1230;
+}
+
+.linksFooter{
+  display: flex;
+  flex-direction: column;
+}
+
+.linksFooter a{
+  text-decoration: none;
+  color: #0D1230;
+}
+
+.ctaFooter{
+  display: flex;
+  flex-direction: column;
+}
+
+.ctaFooter a{
+  text-decoration: none;
+  color: #0D1230;
+}
+.tituloFooter{
+  color: #7138D8;
+  font-weight: 700;
 }
 
 .footer .container .version {

@@ -180,7 +180,7 @@ body {
 .texto{
   width: 60%;
 }
-.social .container .texto h1 span{
+.textoRoxo{
   color: #7138D8;
 }
 
@@ -205,11 +205,210 @@ body {
   align-items: center;
 }
 
+/* IMPACTO DA MÚSICA */
 
-.impactoMusica{
-  height: 100vh;
+.impactoMusica {
   background-color: #0D1230;
+  color: #fff;
+  min-height: 80vh;
+  display: flex;
 }
+
+.impactoMusica .container {
+  flex-direction: column;
+  justify-content: center;
+  gap: 60px;
+  padding: 60px 0;
+}
+
+.impactoMusica h1 {
+  width: 60%;
+  margin: 0 0 10px 0;
+  font-size: 36px;
+}
+
+.impactoMusica h1 .textoRoxo {
+  color: #a58bff;
+  font-size: inherit;
+}
+
+.impactoMusica span {
+  font-size: 13px;
+  color: #a0a0b8;
+}
+
+/* card com os 4 tópicos */
+.cardTopicos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 20px 35px;
+  background-color: #12142a;
+  border: 1px solid #1c2040;
+  border-radius: 10px;
+}
+
+.topico {
+  padding: 25px 30px;
+}
+
+
+
+.topicoTitulo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.topicoTitulo h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+/* bolinha do ícone */
+.icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid #5b2fc4;
+  border-radius: 50%;
+  background-color: #0D1230;
+  color: #a58bff;
+}
+
+.topico p {
+  margin: 0;
+  font-size: 13px;
+  color: #a0a0b8;
+}
+
+/* EXPLICAÇÃO DA MÚSICA */
+
+.explicacaoMusica {
+  background-color: #f4f4fb;
+  color: #0D1230;
+  min-height: 80vh;
+  display: flex;
+}
+
+.explicacaoMusica .container {
+  flex-direction: column;
+  justify-content: center;
+  gap: 60px;
+  padding: 60px 0;
+}
+
+.explicacaoMusica h1 {
+  width: 60%;
+  margin: 0 0 10px 0;
+  font-size: 36px;
+}
+
+.explicacaoMusica p {
+  margin: 0;
+  font-size: 13px;
+}
+
+/* os 3 passos lado a lado */
+.passos {
+  display: flex;
+  gap: 15px;
+}
+
+.passo {
+  flex: 1;
+}
+
+/* etiqueta Passo 01 */
+.passo span {
+  display: block;
+  padding: 10px 12px;
+  font-size: 12px;
+  border: 1px solid #a58bff;
+  border-radius: 8px 8px 0 0;
+}
+
+/* card do passo */
+.passoCard {
+  min-height: 160px;
+  padding: 25px;
+  box-sizing: border-box;
+  border: 1px solid #0D1230;
+  border-radius: 0 0 10px 10px;
+  background-image: linear-gradient(135deg, #e3dcff, #f4f4fb 30%);
+}
+
+.passoCard h4 {
+  margin: 0 0 12px 0;
+  font-size: 17px;
+}
+
+/* BENEFÍCIOS DA MÚSICA */
+
+.beneficiosMusica {
+  background-color: #0D1230;
+  color: #fff;
+  display: flex;
+}
+
+.beneficiosMusica .container {
+  flex-direction: column;
+  gap: 60px;
+  padding: 60px 0;
+}
+
+.beneficiosMusica h1 {
+  margin: 0 0 10px 0;
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.beneficiosMusica p {
+  margin: 0;
+  font-size: 13px;
+  color: #a0a0b8;
+}
+
+/* cada linha: imagem + texto */
+.beneficio {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+/* inverte a ordem: imagem na direita */
+.inverso {
+  flex-direction: row-reverse;
+}
+
+/* fundo sólido atrás da imagem */
+.beneficioImg {
+  padding: 20px;
+  background-color: #12142a;
+  border-radius: 15px;
+}
+
+.beneficioImg img {
+  display: block;
+  width: 300px;
+  border-radius: 15px;
+}
+
+/* texto com a linha verde ao lado */
+.beneficioTexto {
+  padding-left: 15px;
+  border-left: 1px solid #7ed321;
+}
+
+.beneficioTexto h4 {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+}
+
+
+
 /* FOOTER */
 
 .footer {

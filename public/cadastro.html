@@ -47,17 +47,6 @@
     </div>
     <div class="container">
 
-      <!-- Texto lado esquerdo -->
-      <div class="cadastro-intro">
-        <div class="cadastro-texto">
-          <h3>Comece sua<br>jornada <span>musical</span></h3>
-          <p>
-            Em poucos minutos você cria sua conta e passa a
-            ter acesso aos guias, aos quizzes e ao seu dashboard.
-          </p>
-        </div>
-      </div>
-
       <div class="card card-cadastro">
         <h2>Cadastre-se!</h2>
         <div class="formulario">
@@ -65,26 +54,74 @@
                          Para inserir mais um campo, copie uma das inputs abaixo.
                          Assim que inserir vá para o script abaixo.
                      -->
+
+          <span class="secao">Seus dados</span>
+
           <div class="campo">
-            <span>Código de ativação:</span>
-            <input id="codigo_input" type="text" placeholder="Insira aqui seu código" />
+            <span>Nome completo:</span>
+            <input id="nome_input" type="text" placeholder="Seu nome" />
           </div>
           <div class="campo">
-            <span>Nome:</span>
-            <input id="nome_input" type="text" placeholder="Seu nome" />
+            <span>Nome de usuário:</span>
+            <input id="usuario_input" type="text" placeholder="Seu usuário" />
           </div>
           <div class="campo">
             <span>E-mail:</span>
             <input id="email_input" type="text" placeholder="meuemail@provedor.com" />
           </div>
           <div class="campo">
+            <span>Data de nascimento:</span>
+            <input id="nascimento_input" type="date" />
+          </div>
+          <div class="campo opcoes">
+            <span>Gênero:</span>
+            <label class="opcao"><input type="radio" name="genero" value="Masculino" /> Masculino</label>
+            <label class="opcao"><input type="radio" name="genero" value="Feminino" /> Feminino</label>
+            
+          </div>
+
+          <span class="secao">Você e a música</span>
+
+          <div class="campo opcoes">
+            <span>Você já tocou algum instrumento?</span>
+            <label class="opcao"><input type="radio" name="instrumento" value="Sim" /> Sim</label>
+            <label class="opcao"><input type="radio" name="instrumento" value="Não" /> Não</label>
+          </div>
+          <div class="campo">
+            <span>Gênero musical favorito:</span>
+            <select id="generoFav_input">
+              <option value="">Selecione</option>
+              <option>Pop</option>
+              <option>Rock</option>
+              <option>Sertanejo</option>
+              <option>Funk</option>
+              <option>Rap / Hip hop</option>
+              <option>MPB</option>
+              <option>Samba / Pagode</option>
+              <option>Gospel</option>
+              <option>Eletrônica</option>
+              <option>Clássica</option>
+              <option>Jazz / Blues</option>
+              <option>Metal</option>
+              <option>Outro</option>
+            </select>
+          </div>
+
+          <span class="secao">Acesso</span>
+
+          <div class="campo">
             <span>Senha:</span>
-            <input id="senha_input" type="password" placeholder="******" />
+            <input id="senha_input" type="password" placeholder="Mínimo de 8 caracteres" />
           </div>
           <div class="campo">
             <span>Confirmação da Senha:</span>
             <input id="confirmacao_senha_input" type="password" placeholder="******" />
           </div>
+          <div class="campo">
+            <span>Código de ativação:</span>
+            <input id="codigo_input" type="text" placeholder="Insira aqui seu código" />
+          </div>
+
           <button class="botao" onclick="cadastrar()">Cadastrar</button>
 
           <div class="link-login">

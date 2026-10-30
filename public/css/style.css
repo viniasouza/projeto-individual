@@ -277,19 +277,6 @@ body {
   font-size: 16px;
 }
 
-/* bolinha do ícone */
-.icone {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  border: 1px solid #5b2fc4;
-  border-radius: 50%;
-  background-color: #0D1230;
-  color: #a58bff;
-}
-
 .topico p {
   margin: 0;
   font-size: 13px;
@@ -425,7 +412,20 @@ body {
   font-size: 20px;
 }
 
+/* parte de cta */
 
+.divisaoTexto{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  
+}
+.divisaoTexto img{
+  justify-content: center;
+  height: 50vh;
+}
 
 /* FOOTER */
 
@@ -543,8 +543,12 @@ body {
 }
 
 .login .card-cadastro {
-  margin-left: -50px;
-  border-radius: 50px 10px 10px 50px;
+  width: 100%;
+  max-width: 650px;
+  background-color: #161c42;
+  border: 1px solid #2b3270;
+  border-radius: 25px;
+  color: #fff;
 }
 
 /* caixinha transparente */
@@ -774,4 +778,68 @@ input {
   50%  {transform: rotate(25deg)}
   75%  {transform: rotate(-25deg)}
   100% {transform: rotate(25deg)}
+}
+
+
+/* CAMPOS DO CADASTRO */
+
+.card-cadastro .formulario span {
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #eef0ff;
+}
+
+/* títulos: SEUS DADOS, ACESSO... */
+.card-cadastro .formulario .secao {
+  margin: 20px 0 8px 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #c4b5ff;
+}
+
+.card-cadastro .formulario input,
+.card-cadastro select {
+  padding: 14px;
+  background-color: #0D1230;
+  border: 1px solid #2b3270;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 14px;
+  color-scheme: dark;
+}
+
+/* botões redondos (gênero e instrumento) */
+.opcoes {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.opcoes > span {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.opcao {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background-color: #1e2556;
+  border: 1px solid #2b3270;
+  border-radius: 50px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.card-cadastro .opcao input {
+  margin: 0;
+  padding: 0;
+  accent-color: #8b6cff;
+}
+
+.opcao:has(input:checked) {
+  border-color: #c4b5ff;
 }

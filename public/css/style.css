@@ -22,8 +22,9 @@ body {
   margin: auto;
 }
 
-.padding-header{
-  position: absolute;
+
+.padding-header {
+  position: fixed;
   top: 20px;
   left: 0;
   width: 100%;
@@ -32,73 +33,84 @@ body {
   z-index: 10;
 }
 
-
 .header {
-    display: flex; 
-    align-items: center;
-    flex: 1;
-    justify-content: space-between;
-    height: 10vh;
-    width: 90%;
-    position: fixed;
-    background-color: rgba(22, 28, 66, 0.964);
-    border: 1px solid #2b3270;
-    border-radius: 50px;
-}
-
-.header .container {
-  padding: 5px 30px 5px 30px;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.header a {
-  text-decoration: none;
-  color: #fff;
-}
-
-.header a:hover{
-  color: #7138D8;
-  font-size: 17px;
-  
-}
-
-.agora {
-  background-color: rgb(53, 53, 53);
-  padding: 1vh 2vh 1vh 2vh;
-  border-radius: 2vh;
-}
-
-.navbar {
-  width: 300px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  list-style: none;
-  color: #e3b062;
+  width: 90%;
+  max-width: 1100px;
+  padding: 10px 25px;
+  background-color: rgba(22, 28, 66, 0.85);
+  border: 1px solid #2b3270;
+  border-radius: 50px;
 }
 
+/* logo */
 .titulo {
-  color: #32b9cd;
-  width: fit-content;
-  font-weight: 500;
-}
-
-.header h1 {
   margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
 }
 
-#btnCadastro{
-  padding: 10px;
-}
-#btnCadastro:hover{
-  border: solid 1px #7138D8;
-  border-radius: 3vh;
+.titulo span {
+  color: #c4b5ff;
 }
 
-#btnLogin:hover{
-  color: white;
+/* links do meio */
+.navbar {
+  display: flex;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
+
+.navbar a {
+  display: block;
+  padding: 8px 16px;
+  border-radius: 50px;
+  color: #eef0ff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.navbar a:hover,
+.agora a {
+  background-color: #1e2556;
+}
+
+/* botões da direita */
+.btnheader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btnheader a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+#btnCadastro {
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-radius: 50px;
+}
+
+#btnCadastro:hover {
+  border-color: #7138D8;
+}
+
+.header .btnRoxo {
+  padding: 8px 20px;
+}
+
+.header .btnRoxo:hover {
+  filter: brightness(1.2);  /* Aplica brilho */
+}
+
 /* BANNER */
 
 .banner {
@@ -337,7 +349,7 @@ body {
   box-sizing: border-box;
   border: 1px solid #0D1230;
   border-radius: 0 0 10px 10px;
-  background-image: linear-gradient(135deg, #e3dcff, #f4f4fb 30%);
+
 }
 
 .passoCard h4 {
@@ -399,7 +411,13 @@ body {
 /* texto com a linha verde ao lado */
 .beneficioTexto {
   padding-left: 15px;
-  border-left: 1px solid #7ed321;
+  border-left: 1px solid #7B5CFA;
+}
+#linhaDireita{
+  padding-left:0;
+  border-left: none;
+    padding-right: 15px;
+  border-right: 1px solid #7B5CFA;
 }
 
 .beneficioTexto h4 {

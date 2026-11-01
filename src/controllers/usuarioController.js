@@ -53,6 +53,7 @@ function cadastrar(req, res) {
     var dtNasc = req.body.dtNascServer;
     var genero = req.body.generoServer;
     var tocouInstrumento = req.body.tocouInstrumentoServer;
+    var generoMusical = req.body.generoMusicalServer;
     var fkEmpresa = req.body.idEmpresaVincularServer;
 
     // Faça as validações dos valores
@@ -65,7 +66,7 @@ function cadastrar(req, res) {
     }else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(nome, email, senha, username, dtNasc, genero, tocouInstrumento, fkEmpresa)
+        usuarioModel.cadastrar(nome, email, senha, username, dtNasc, genero, tocouInstrumento, fkEmpresa, generoMusical)
             .then(
                 function (resultado) {
                     res.json(resultado);

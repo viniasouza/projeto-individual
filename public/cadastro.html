@@ -90,20 +90,20 @@
           <div class="campo">
             <span>Gênero musical favorito:</span>
             <select id="generoFav_input">
-              <option value="">Selecione</option>
-              <option>Pop</option>
-              <option>Rock</option>
-              <option>Sertanejo</option>
-              <option>Funk</option>
-              <option>Rap / Hip hop</option>
-              <option>MPB</option>
-              <option>Samba / Pagode</option>
-              <option>Gospel</option>
-              <option>Eletrônica</option>
-              <option>Clássica</option>
-              <option>Jazz / Blues</option>
-              <option>Metal</option>
-              <option>Outro</option>
+              <option value="0" disabled selected>Selecione</option>
+              <option value="1">Pop</option>
+              <option value="2">Rock</option>
+              <option value="3">Sertanejo</option>
+              <option value="4">Funk</option>
+              <option value="5">Rap / Hip hop</option>
+              <option value="6">MPB</option>
+              <option value="7">Samba / Pagode</option>
+              <option value="8">Gospel</option>
+              <option value="9">Eletrônica</option>
+              <option value="10">Clássica</option>
+              <option value="11">Jazz / Blues</option>
+              <option value="12">Metal</option>
+              <option value="13">Outro</option>
             </select>
           </div>
 
@@ -201,7 +201,7 @@
       dtNascVar == "" ||
       generoVar == "" ||
       tocouInstrumentoVar == "" ||
-      generoMusicalVar == "" ||
+      generoMusicalVar == "0" ||
       senhaVar == "" ||
       confirmacaoSenhaVar == "" ||
       senhaVar != confirmacaoSenhaVar
@@ -250,6 +250,7 @@
         dtNascServer: dtNascVar,
         generoServer: generoVar,
         tocouInstrumentoServer: tocouInstrumentoVar,
+        generoMusicalServer: generoMusicalVar,
         idEmpresaVincularServer: idEmpresaVincular
       }),
     })
@@ -299,6 +300,8 @@
         console.log(`#ERRO: ${resposta}`);
       });
   }
+
+  
 
   function sumirMensagem() {
     cardErro.style.display = "none";

@@ -191,7 +191,7 @@
     var senhaVar = senha_input.value;
     var confirmacaoSenhaVar = confirmacao_senha_input.value;
     var codigoVar = codigo_input.value;
-    var idEmpresaVincular
+    var idEmpresaVincular = null;
 
     // Verificando se há algum campo em branco
     if (
@@ -203,7 +203,8 @@
       tocouInstrumentoVar == "" ||
       generoMusicalVar == "" ||
       senhaVar == "" ||
-      confirmacaoSenhaVar == ""
+      confirmacaoSenhaVar == "" ||
+      senhaVar != confirmacaoSenhaVar
     ) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML =
@@ -215,19 +216,24 @@
       setInterval(sumirMensagem, 5000);
     }
 
-    // Verificando se o código de ativação é de alguma empresa cadastrada
-    for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
-      if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
-        idEmpresaVincular = listaEmpresasCadastradas[i].id
-        console.log("Código de ativação válido.");
-        break;
-      } else {
-        cardErro.style.display = "block";
-        mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
-        finalizarAguardar();
-      }
-    }
+    if(codigoVar == ''){
+      idEmpresaVincular = null;
+    }else{
 
+      // Verificando se o código de ativação é de alguma empresa cadastrada
+      for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
+        if (listaEmpresasCadastradas[i].codigoIndicacao == codigoVar) {
+          idEmpresaVincular = listaEmpresasCadastradas[i].id
+          console.log("Código de ativação válido.");
+          break;
+        } else {
+          cardErro.style.display = "block";
+          mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
+          finalizarAguardar();
+        }
+      }
+      
+    }
     // Enviando o valor da nova input
     fetch("/usuarios/cadastrar", {
       method: "POST",
@@ -239,7 +245,11 @@
         // Agora vá para o arquivo routes/usuario.js
         nomeServer: nomeVar,
         emailServer: emailVar,
-        senhaServer: senhaVar,
+        senhaServer: criptografarSenha(senhaVar),
+        usernameServer: usernameVar,
+        dtNascServer: dtNascVar,
+        generoServer: generoVar,
+        tocouInstrumentoServer: tocouInstrumentoVar,
         idEmpresaVincularServer: idEmpresaVincular
       }),
     })
@@ -281,7 +291,7 @@
             listaEmpresasCadastradas.push(empresa);
 
             console.log("listaEmpresasCadastradas")
-            console.log(listaEmpresasCadastradas[0].codigo_ativacao)
+            console.log(listaEmpresasCadastradas[0].codigoIndicacao)
           });
         });
       })
@@ -292,5 +302,32 @@
 
   function sumirMensagem() {
     cardErro.style.display = "none";
+  }
+
+
+  function criptografarSenha(senha){
+    let tamanhoSenha = senha.length;
+    let listaCaracteresSenha = [];
+
+    // insere na lista os codigos de tras pra frente
+    for(let i = 0; i < tamanhoSenha; i++){
+        listaCaracteresSenha.unshift(senha.charCodeAt(i).toString(8))
+    }
+
+    let senhaFinal = ''
+
+    // criptografa a senha 
+    for(let i = 0; i < tamanhoSenha; i++){
+        if(listaCaracteresSenha[i] % 2 == 0){
+            listaCaracteresSenha[i] = Number(listaCaracteresSenha[i]) + 10
+        }else{
+            listaCaracteresSenha[i] = (Number(listaCaracteresSenha[i]) + 20).toString(2)
+        }
+
+        senhaFinal += listaCaracteresSenha[i];
+    }
+
+    return senhaFinal;
+
   }
 </script>

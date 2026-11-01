@@ -136,7 +136,7 @@
             },
             body: JSON.stringify({
                 emailServer: emailVar,
-                senhaServer: senhaVar
+                senhaServer: criptografarSenha(senhaVar)
             })
         }).then(function (resposta) {
             console.log("ESTOU NO THEN DO entrar()!")
@@ -150,7 +150,9 @@
                     sessionStorage.EMAIL_USUARIO = json.email;
                     sessionStorage.NOME_USUARIO = json.nome;
                     sessionStorage.ID_USUARIO = json.id;
-                    sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
+                    sessionStorage.SENHA_USUARIO = json.senha;
+                    
+                    // sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
 
                     setTimeout(function () {
                         window.location = "./dashboard/cards.html";
@@ -178,5 +180,31 @@
     function sumirMensagem() {
         cardErro.style.display = "none"
     }
+
+    function criptografarSenha(senha){
+    let tamanhoSenha = senha.length;
+    let listaCaracteresSenha = [];
+
+    // insere na lista os codigos de tras pra frente
+    for(let i = 0; i < tamanhoSenha; i++){
+        listaCaracteresSenha.unshift(senha.charCodeAt(i).toString(8))
+    }
+
+    let senhaFinal = ''
+
+    // criptografa a senha 
+    for(let i = 0; i < tamanhoSenha; i++){
+        if(listaCaracteresSenha[i] % 2 == 0){
+            listaCaracteresSenha[i] = Number(listaCaracteresSenha[i]) + 10
+        }else{
+            listaCaracteresSenha[i] = (Number(listaCaracteresSenha[i]) + 20).toString(2)
+        }
+
+        senhaFinal += listaCaracteresSenha[i];
+    }
+
+    return senhaFinal;
+
+  }
 
 </script>

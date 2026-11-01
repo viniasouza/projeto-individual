@@ -75,8 +75,8 @@
           </div>
           <div class="campo opcoes">
             <span>Gênero:</span>
-            <label class="opcao"><input type="radio" name="genero" value="Masculino" /> Masculino</label>
-            <label class="opcao"><input type="radio" name="genero" value="Feminino" /> Feminino</label>
+            <label class="opcao"><input type="radio" name="genero" value="M" /> Masculino</label>
+            <label class="opcao"><input type="radio" name="genero" value="F" /> Feminino</label>
             
           </div>
 
@@ -84,8 +84,8 @@
 
           <div class="campo opcoes">
             <span>Você já tocou algum instrumento?</span>
-            <label class="opcao"><input type="radio" name="instrumento" value="Sim" /> Sim</label>
-            <label class="opcao"><input type="radio" name="instrumento" value="Não" /> Não</label>
+            <label class="opcao"><input type="radio" name="instrumento" value="1" /> Sim</label>
+            <label class="opcao"><input type="radio" name="instrumento" value="0" /> Não</label>
           </div>
           <div class="campo">
             <span>Gênero musical favorito:</span>
@@ -182,6 +182,12 @@
     // Agora vá para o método fetch logo abaixo
     var nomeVar = nome_input.value;
     var emailVar = email_input.value;
+    var usernameVar = usuario_input.value;
+    var dtNascVar = nascimento_input.value;
+    var generoVar = document.querySelector('input[name=genero]:checked').value;
+    var tocouInstrumentoVar = document.querySelector('input[name=instrumento]:checked').value;
+    var generoMusicalVar = generoFav_input.value;
+
     var senhaVar = senha_input.value;
     var confirmacaoSenhaVar = confirmacao_senha_input.value;
     var codigoVar = codigo_input.value;
@@ -191,13 +197,17 @@
     if (
       nomeVar == "" ||
       emailVar == "" ||
+      usernameVar == "" ||
+      dtNascVar == "" ||
+      generoVar == "" ||
+      tocouInstrumentoVar == "" ||
+      generoMusicalVar == "" ||
       senhaVar == "" ||
-      confirmacaoSenhaVar == "" ||
-      codigoVar == ""
+      confirmacaoSenhaVar == ""
     ) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML =
-        "(Mensagem de erro para todos os campos em branco)";
+        "(Todos os campos devem ser preenchidos!)";
 
       finalizarAguardar();
       return false;

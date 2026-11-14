@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaTech | Tempo Real</title>
+
+
+    <link rel="stylesheet" href="./../css/dashboards.css">
+    <link rel="stylesheet" href="./../css/style.css" />
+
+    <script src="../js/sessao.js"></script>
+    <script src="../js/alerta.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body onload="validarSessao(),onloadEsconder()">
+
+    <div class="janela">
+
+
+        <!-- inicio nav -->
+        <div class="header-left dash-header">
+
+            <h1>Musify</h1>
+
+            <div class="hello">
+                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
+            </div>
+
+            <div class="btn-nav-white">
+                <a href="./cards.html">
+                    <h3>Dashboard</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav-white">
+                <a href="./ranking.html">
+                    <h3>Ranking Geral</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav">
+                <a href="./quizz.html">
+                    <h3>Quizzes</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav-white">
+                <a href="./mural.html">
+                    <h3>Mural de Avisos</h3>
+                </a>
+            </div>
+            <div class="codigoIndicacao">
+                <span class="titulo">Seu código de indicação</span>
+                <div class="codigo">
+                    <span id="b_codigoIndicacao">MUSI20000</span>
+                </div>
+            </div>
+
+            <div class="btn-logout" onclick="limparSessao()">
+                <h3>Sair</h3>
+            </div>
+
+        </div>
+        <!-- Fim nav -->
+
+        <!-- Inicio do quiz -->
+        <div class="dash">
+            <div class="containerQuiz">
+
+                <div id="pontuacaoEJogo">
+
+                    <div id="div_cardIniciar">
+                        <img src="https://s2-g1.glbimg.com/L0W-icHmpZwrCU0RrVCBxegcf6k=/0x0:3995x2664/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2023/7/9/bHqciyToeKetWfdiynsg/2-1-.jpg"
+                            alt="">
+                        <button id="btnIniciarQuiz" onclick="iniciarQuiz()">INICIAR QUIZ</button>
+                    </div>
+
+                    <div id="pontuacao" class="flex-colunar width-fit-content border-primary">
+                        <div id="pontuacaoDuranteJogo" class="flex-colunar padding-8">
+                            <span class="width-fit-content">Quantidade de acertos: <span id="spanCertas"></span></span>
+                            <span class="width-fit-content">Quantidade de erros: <span id="spanErradas"></span></span>
+                        </div>
+                        <div id="pontuacaoFinalJogo" class="flex-colunar padding-8">
+                            <span id="pontuacaoFinal" class="width-fit-content">Pontuação Final:
+                                <span id="spanPontuacaoFinal">***</span>
+                            </span>
+                            <span id="msgFinal" class="width-fit-content">***</span>
+                        </div>
+                    </div>
+
+                    <div id="jogo" class="width-fit-content flex-colunar border-secondary">
+
+                        <div id="infoQuestao" class="padding-8 display">
+                            <span>Questão atual: <span id="spanNumeroDaQuestaoAtual"></span> de <span
+                                    id="qtdQuestoes"></span>
+                                questões.</span>
+                        </div>
+
+                        <div id="perguntaDaQuestaoAtual" class="padding-8 display">
+                            <span id="spanQuestaoExibida" class="text-bold"></span>
+                        </div>
+
+                        <div id="infoAlternativas" class="padding-8">
+                            <span><em>Escolha uma opção dentre as abaixo:</em></span>
+                        </div>
+
+                        <div id="opcoes" class="flex-colunar padding-8">
+                            <span>
+                                <input type="radio" id="primeiraOpcao" name="option" class="radio"
+                                    value="alternativaA" />
+                                <label for="primeiraOpcao" class="option" id="labelOpcaoUm"></label>
+                            </span>
+                            <span>
+                                <input type="radio" id="segundaOpcao" name="option" class="radio"
+                                    value="alternativaB" />
+                                <label for="segundaOpcao" class="option" id="labelOpcaoDois"></label>
+                            </span>
+                            <span>
+                                <input type="radio" id="terceiraOpcao" name="option" class="radio"
+                                    value="alternativaC" />
+                                <label for="terceiraOpcao" class="option" id="labelOpcaoTres"></label>
+                            </span>
+                            <span>
+                                <input type="radio" id="quartaOpcao" name="option" class="radio" value="alternativaD" />
+                                <label for="quartaOpcao" class="option" id="labelOpcaoQuatro"></label>
+                            </span>
+                        </div>
+
+                        <div id="botoes" class="flex-colunar padding-8">
+                            <button onclick="submeter()" id="btnSubmeter">Submeter resposta</button>
+                            <button onclick="avancar()" id="btnProx" disabled>Avançar para próxima questão</button>
+                            <!-- <button onclick="finalizar()" id="btnConcluir" disabled>Finalizar Quiz</button> -->
+                            <button onclick="tentarNovamente()" id="btnTentarNovamente" disabled>Tentar
+                                novamente</button>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+        <!-- fim do quiz -->
+
+    </div>
+
+</body>
+
+<script>
+
+    const listaDeQuestoes = [
+
+        // ---------- PERCEPÇÃO AUDITIVA ----------
+        {
+            area: "Percepção auditiva",
+            pergunta: "Comparado a um som grave, um som agudo tem frequência:",
+            alternativaA: "Maior, com mais vibrações por segundo",
+            alternativaB: "Menor, com menos vibrações por segundo",
+            alternativaC: "Igual, o que muda é só o volume",
+            alternativaD: "Depende apenas do instrumento",
+            alternativaCorreta: "alternativaA"
+        },
+        {
+            area: "Percepção auditiva",
+            pergunta: "Duas pessoas cantam a mesma nota, com o mesmo volume. O que permite reconhecer qual voz é de quem?",
+            alternativaA: "A duração da nota",
+            alternativaB: "A intensidade",
+            alternativaC: "O timbre",
+            alternativaD: "O compasso",
+            alternativaCorreta: "alternativaC"
+        },
+        {
+            area: "Percepção auditiva",
+            pergunta: "O que pode acontecer com quem ouve música em volume alto por muito tempo?",
+            alternativaA: "O ouvido fica cada vez mais sensível",
+            alternativaB: "Fadiga auditiva e, com a repetição, perda de audição",
+            alternativaC: "Nada, o ouvido sempre se acostuma sem danos",
+            alternativaD: "Só a visão é afetada",
+            alternativaCorreta: "alternativaB"
+        },
+
+        // ---------- TEORIA MUSICAL ----------
+        {
+            area: "Teoria musical",
+            pergunta: "Qual sequência apresenta as sete notas musicais na ordem correta?",
+            alternativaA: "Dó, Mi, Ré, Fá, Lá, Sol, Si",
+            alternativaB: "Dó, Ré, Fá, Mi, Sol, Si, Lá",
+            alternativaC: "Si, Lá, Dó, Sol, Fá, Ré, Mi",
+            alternativaD: "Dó, Ré, Mi, Fá, Sol, Lá, Si",
+            alternativaCorreta: "alternativaD"
+        },
+        {
+            area: "Teoria musical",
+            pergunta: "Em um teclado, qual nota fica logo à esquerda do grupo de duas teclas pretas?",
+            alternativaA: "Fá",
+            alternativaB: "Dó",
+            alternativaC: "Sol",
+            alternativaD: "Lá",
+            alternativaCorreta: "alternativaB"
+        },
+        {
+            area: "Teoria musical",
+            pergunta: "O que o sustenido (#) faz com uma nota?",
+            alternativaA: "Abaixa a nota em meio tom",
+            alternativaB: "Dobra a duração da nota",
+            alternativaC: "Sobe a nota em meio tom",
+            alternativaD: "Aumenta o volume da nota",
+            alternativaCorreta: "alternativaC"
+        },
+
+        // ---------- RITMO ----------
+        {
+            area: "Ritmo",
+            pergunta: "Uma música a 60 BPM e outra a 120 BPM. Qual delas é mais rápida?",
+            alternativaA: "A de 120 BPM, com o dobro de batidas por minuto",
+            alternativaB: "A de 60 BPM",
+            alternativaC: "As duas têm a mesma velocidade",
+            alternativaD: "Depende do instrumento que toca",
+            alternativaCorreta: "alternativaA"
+        },
+        {
+            area: "Ritmo",
+            pergunta: "Em um compasso 4/4, quantas semínimas cabem em um compasso?",
+            alternativaA: "2",
+            alternativaB: "3",
+            alternativaC: "8",
+            alternativaD: "4",
+            alternativaCorreta: "alternativaD"
+        },
+        {
+            area: "Ritmo",
+            pergunta: "Na partitura, o que é uma pausa?",
+            alternativaA: "Um acorde mais longo que os outros",
+            alternativaB: "O sinal de fim da música",
+            alternativaC: "Um sinal de silêncio, que também tem duração definida",
+            alternativaD: "Uma nota tocada mais forte",
+            alternativaCorreta: "alternativaC"
+        },
+
+        // ---------- HARMONIA ----------
+        {
+            area: "Harmonia",
+            pergunta: "Quais notas formam o acorde de Dó maior?",
+            alternativaA: "Dó, Mi e Sol",
+            alternativaB: "Dó, Ré e Mi",
+            alternativaC: "Dó, Fá e Lá",
+            alternativaD: "Dó, Sol e Si",
+            alternativaCorreta: "alternativaA"
+        },
+        {
+            area: "Harmonia",
+            pergunta: "Em geral, qual tipo de acorde costuma soar mais triste ou introspectivo?",
+            alternativaA: "Maior",
+            alternativaB: "Menor",
+            alternativaC: "Nenhum, todos soam iguais",
+            alternativaD: "Só os acordes tocados rápido",
+            alternativaCorreta: "alternativaB"
+        },
+        {
+            area: "Harmonia",
+            pergunta: "Qual é a diferença entre melodia e harmonia?",
+            alternativaA: "Melodia é a parte mais lenta, e harmonia é a mais rápida",
+            alternativaB: "Melodia é só a letra, e harmonia é só o instrumento",
+            alternativaC: "As duas são a mesma coisa com nomes diferentes",
+            alternativaD: "Melodia é a sequência de notas que cantamos, e harmonia são notas tocadas juntas",
+            alternativaCorreta: "alternativaD"
+        },
+
+        // ---------- MÚSICA E MENTE ----------
+        {
+            area: "Música e mente",
+            pergunta: "O que acontece no cérebro de quem toca um instrumento?",
+            alternativaA: "Só a audição é ativada",
+            alternativaB: "Apenas a área da fala trabalha",
+            alternativaC: "Audição, movimento, visão e memória trabalham ao mesmo tempo",
+            alternativaD: "O cérebro descansa, porque tocar é automático",
+            alternativaCorreta: "alternativaC"
+        },
+        {
+            area: "Música e mente",
+            pergunta: "Ao ouvir uma música de que gosta muito, o cérebro pode liberar qual substância, ligada ao prazer e à recompensa?",
+            alternativaA: "Melatonina",
+            alternativaB: "Insulina",
+            alternativaC: "Hemoglobina",
+            alternativaD: "Dopamina",
+            alternativaCorreta: "alternativaD"
+        },
+        {
+            area: "Música e mente",
+            pergunta: "Por que uma música antiga pode trazer de volta uma lembrança de um lugar ou de um momento?",
+            alternativaA: "O cérebro associa os sons a momentos e emoções que vivemos",
+            alternativaB: "O ouvido guarda uma cópia da música",
+            alternativaC: "Músicas antigas têm mais frequências graves",
+            alternativaD: "A música apaga as outras lembranças",
+            alternativaCorreta: "alternativaA"
+        }
+    ];
+
+    // armazena os acertos de cada area na ordem
+    let listaQtdAcertos = [];
+
+    // variáveis globais    
+    let numeroDaQuestaoAtual = 0
+    let pontuacaoFinal = 0
+    let tentativaIncorreta = 0
+    let certas = 0
+    let erradas = 0
+    let quantidadeDeQuestoes = listaDeQuestoes.length
+
+    
+    // let isUltima = numeroDaQuestaoAtual == quantidadeDeQuestoes-1 ? true : false
+
+    function onloadEsconder() {
+        document.getElementById('pontuacao').style.display = "none"
+        document.getElementById('jogo').style.display = "none"
+    }
+
+    function iniciarQuiz() {
+        document.getElementById('pontuacao').style.display = "flex"
+        document.getElementById('jogo').style.display = "flex"
+        document.getElementById('btnIniciarQuiz').style.display = "none"
+        div_cardIniciar.innerHTML = '';
+
+        document.getElementById('qtdQuestoes').innerHTML = quantidadeDeQuestoes
+
+        preencherHTMLcomQuestaoAtual(0)
+
+        btnSubmeter.disabled = false
+        btnProx.disabled = true
+        // btnConcluir.disabled = true
+        btnTentarNovamente.disabled = true
+
+        // limpa a lista
+        listaQtdAcertos = [];
+    }
+
+    function preencherHTMLcomQuestaoAtual(index) {
+        habilitarAlternativas(true)
+        const questaoAtual = listaDeQuestoes[index]
+        numeroDaQuestaoAtual = index
+        console.log("questaoAtual")
+        console.log(questaoAtual)
+        document.getElementById("spanNumeroDaQuestaoAtual").innerHTML = Number(index) + 1 // ajustando porque o index começa em 0
+        document.getElementById("spanQuestaoExibida").innerHTML = questaoAtual.pergunta;
+        document.getElementById("labelOpcaoUm").innerHTML = questaoAtual.alternativaA;
+        document.getElementById("labelOpcaoDois").innerHTML = questaoAtual.alternativaB;
+        document.getElementById("labelOpcaoTres").innerHTML = questaoAtual.alternativaC;
+        document.getElementById("labelOpcaoQuatro").innerHTML = questaoAtual.alternativaD;
+    }
+
+    function submeter() {
+        const options = document.getElementsByName("option"); // recupera alternativas no html
+
+        let hasChecked = false
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].checked) {
+                hasChecked = true
+                break
+            }
+        }
+
+        if (!hasChecked) {
+            alert("Não há alternativas escolhidas. Escolha uma opção.")
+        } else {
+            btnSubmeter.disabled = true
+            btnProx.disabled = false
+
+            habilitarAlternativas(false)
+
+            checarResposta()
+        }
+    }
+
+    function habilitarAlternativas(trueOrFalse) {
+        let opcaoEscolhida = trueOrFalse ? false : true
+
+        primeiraOpcao.disabled = opcaoEscolhida
+        segundaOpcao.disabled = opcaoEscolhida
+        terceiraOpcao.disabled = opcaoEscolhida
+        quartaOpcao.disabled = opcaoEscolhida
+
+    }
+
+    function avancar() {
+        btnProx.disabled = true
+        btnSubmeter.disabled = false
+
+        desmarcarRadioButtons()
+
+        if (numeroDaQuestaoAtual < quantidadeDeQuestoes - 1) {
+            preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
+        } else if (numeroDaQuestaoAtual == quantidadeDeQuestoes - 1) {
+            alert("Atenção... a próxima é a ultima questão!")
+            preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
+        } else {
+            finalizarJogo()
+        }
+        limparCoresBackgroundOpcoes()
+    }
+
+    function tentarNovamente() {
+        // atualiza a página
+        window.location.reload()
+    }
+
+    function checarResposta() {
+        const questaoAtual = listaDeQuestoes[numeroDaQuestaoAtual] // questão atual 
+        const respostaQuestaoAtual = questaoAtual.alternativaCorreta // qual é a resposta correta da questão atual
+
+        const options = document.getElementsByName("option"); // recupera alternativas no html
+
+        let alternativaCorreta = null // variável para armazenar a alternativa correta
+
+        options.forEach((option) => {
+            if (option.value === respostaQuestaoAtual) {
+                console.log("alternativaCorreta está no componente: " + alternativaCorreta)
+                alternativaCorreta = option.labels[0].id
+            }
+        })
+
+        // verifica se resposta assinalada é correta
+        options.forEach((option) => {
+            if (option.checked === true && option.value === respostaQuestaoAtual) {
+                document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
+                pontuacaoFinal++
+                certas++
+                document.getElementById("spanCertas").innerHTML = certas
+                numeroDaQuestaoAtual++
+            } else if (option.checked && option.value !== respostaQuestaoAtual) {
+                const wrongLabelId = option.labels[0].id
+
+                document.getElementById(wrongLabelId).classList.add("text-danger-with-bg")
+                document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
+                tentativaIncorreta++
+                erradas++
+                document.getElementById("spanErradas").innerHTML = erradas
+                numeroDaQuestaoAtual++
+            }
+        })
+    }
+
+    function limparCoresBackgroundOpcoes() {
+        const options = document.getElementsByName("option");
+        options.forEach((option) => {
+            document.getElementById(option.labels[0].id).classList.remove("text-danger-with-bg")
+            document.getElementById(option.labels[0].id).classList.remove("text-success-with-bg")
+        })
+    }
+
+    function desmarcarRadioButtons() {
+        const options = document.getElementsByName("option");
+        for (let i = 0; i < options.length; i++) {
+            options[i].checked = false;
+        }
+    }
+
+    function finalizarJogo() {
+        let textoParaMensagemFinal = null
+        let classComCoresParaMensagemFinal = null
+        const porcentagemFinalDeAcertos = pontuacaoFinal / quantidadeDeQuestoes
+
+        if (porcentagemFinalDeAcertos <= 0.3) {
+            textoParaMensagemFinal = "Parece que você não estudou..."
+            classComCoresParaMensagemFinal = "text-danger-with-bg"
+        }
+        else if (porcentagemFinalDeAcertos > 0.3 && porcentagemFinalDeAcertos < 0.9) {
+            textoParaMensagemFinal = "Pode melhorar na próxima, hein!"
+            classComCoresParaMensagemFinal = "text-warning-with-bg"
+        }
+        else if (porcentagemFinalDeAcertos >= 0.9) {
+            textoParaMensagemFinal = "Uau, parabéns!"
+            classComCoresParaMensagemFinal = "text-success-with-bg"
+        }
+
+        textoParaMensagemFinal += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertos) * 100) + "% das questões."
+
+
+        document.getElementById('msgFinal').innerHTML = textoParaMensagemFinal
+        document.getElementById('msgFinal').classList.add(classComCoresParaMensagemFinal)
+        document.getElementById('spanPontuacaoFinal').innerHTML = pontuacaoFinal
+
+        document.getElementById('jogo').classList.add("text-new-gray")
+
+        btnProx.disabled = true
+        btnSubmeter.disabled = true
+        // btnConcluir.disabled = true
+        btnTentarNovamente.disabled = false
+
+        // Inserindo os registros do quiz no banco
+        cadastrarQuiz();
+
+        // Insere no bd a qtd de acertos de cada area
+        for(let i = 1; i <= 5; i++){
+
+
+            inserirRespostas()
+        }
+
+    }
+
+    function cadastrarQuiz() {
+        // Enviando o valor da nova input
+        fetch("/quiz/cadastrarQuiz", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+
+                fkUsuarioServer: sessionStorage.ID_USUARIO
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+
+                    resposta.json().then(json => {
+                        console.log(json);
+                        console.log(JSON.stringify(json));
+                        sessionStorage.ID_QUIZ = json.insertId;
+
+                    });
+
+
+                } else {
+                    throw "Houve um erro ao tentar inserir o quiz!";
+
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                console.log(sessionStorage.ID_USUARIO)
+            });
+
+        return false;
+    }
+
+    function inserirRespostas() {
+        // Enviando o valor da nova input
+        fetch("/quiz/inserirRespostas", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+
+                fkUsuarioServer: sessionStorage.ID_USUARIO
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+
+                    resposta.json().then(json => {
+                        console.log(json);
+                        console.log(JSON.stringify(json));
+                        sessionStorage.ID_QUIZ = json.insertId;
+
+                    });
+
+
+                } else {
+                    throw "Houve um erro ao tentar inserir o quiz!";
+
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                console.log(sessionStorage.ID_USUARIO)
+            });
+
+        return false;
+
+    }
+</script>
+
+</html>

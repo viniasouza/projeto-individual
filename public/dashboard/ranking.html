@@ -16,7 +16,7 @@
 
     <div class="janela">
 
-        
+
         <!-- inicio nav -->
         <div class="header-left dash-header">
 
@@ -27,7 +27,7 @@
             </div>
 
             <div class="btn-nav-white">
-                <a href="./cards.html">
+                <a href="./dashboard.html">
                     <h3>Dashboard</h3>
                 </a>
             </div>
@@ -49,13 +49,19 @@
                     <h3>Mural de Avisos</h3>
                 </a>
             </div>
+            <div class="codigoIndicacao">
+                <span class="titulo">Seu código de indicação</span>
+                <div class="codigo">
+                    <span id="b_codigoIndicacao">MUSI20000</span>
+                </div>
+            </div>
 
             <div class="btn-logout" onclick="limparSessao()">
                 <h3>Sair</h3>
             </div>
 
-            <!-- Fim nav -->
         </div>
+        <!-- Fim nav -->
 
         <div class="dash">
             <h1 class="tituloRanking">Ranking de indicações</h1>
@@ -73,7 +79,7 @@
                     </tr>
                 </thead>
                 <tbody id="corpoRanking">
-                    
+
                 </tbody>
             </table>
 
@@ -113,7 +119,7 @@
 
     // Monta a tabela. Para testar sem a API, chame no console do navegador:
     // exibirRanking([{ id: 1, nome: "Ana Lima", tocaInstrumento: 1, generoFav: "Rock", totalIndicacoes: 5, diasNaPlataforma: 40 }])
-    
+
     function exibirRanking(lista) {
         var linhas = "";
 

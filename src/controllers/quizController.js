@@ -1,30 +1,18 @@
-var usuarioModel = require("../models/usuarioModel");
+var quizModel = require("../models/quizModel");
 var aquarioModel = require("../models/aquarioModel");
 
 function cadastrarQuiz(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
-    var nome = req.body.nomeServer;
-    var email = req.body.emailServer;
-    var senha = req.body.senhaServer;
-    var username = req.body.usernameServer;
-    var dtNasc = req.body.dtNascServer;
-    var genero = req.body.generoServer;
-    var tocouInstrumento = req.body.tocouInstrumentoServer;
-    var generoMusical = req.body.generoMusicalServer;
-    var fkEstado = req.body.estadoServer;
-    var fkEmpresa = req.body.idEmpresaVincularServer;
+    var fkUsuario = req.body.fkUsuarioServer;
+
 
     // Faça as validações dos valores
-    if (nome == undefined) {
+    if (fkUsuario == undefined) {
         res.status(400).send("Seu nome está undefined!");
-    } else if (email == undefined) {
-        res.status(400).send("Seu email está undefined!");
-    } else if (senha == undefined) {
-        res.status(400).send("Sua senha está undefined!");
     }else {
 
-        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrarQuiz(nome, email, senha, username, dtNasc, genero, tocouInstrumento, fkEmpresa, generoMusical, fkEstado)
+        // Passe os valores como parâmetro e vá para o arquivo quizModel.js
+        quizModel.cadastrarQuiz(fkUsuario)
             .then(
                 function (resultado) {
                     res.json(resultado);

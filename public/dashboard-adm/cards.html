@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaTech | Tempo Real</title>
+
+
+    <link rel="stylesheet" href="./../css/dashboards.css">
+    <link rel="stylesheet" href="./../css/estilo.css" />
+
+    <script src="../js/sessao.js"></script>
+    <script src="../js/alerta.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+
+
+    <!-- scripts do Chart.js - 2022-1 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body onload="validarSessao(), plotarGraficoRadar(),plotarGraficoLinhas(),  atualizacaoPeriodica()">
+
+    <div class="janela">
+
+        <!-- inicio nav -->
+        <div class="header-left dash-header">
+
+            <h1>Musify</h1>
+
+            <div class="hello">
+                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
+            </div>
+
+            <div class="btn-nav">
+                <h3>Dashboard</h3>
+            </div>
+
+            <div class="btn-nav-white">
+                <a href="./ranking.html">
+                    <h3>Ranking Geral</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav-white">
+                <a href="./quizz.html">
+                    <h3>Quizzes</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav-white">
+                <a href="./mural.html">
+                    <h3>Mural de Avisos</h3>
+                </a>
+            </div>
+            <div class="codigoIndicacao">
+                <span class="titulo">Seu código de indicação</span>
+                <div class="codigo">
+                    <span id="b_codigoIndicacao">MUSI20000</span>
+                </div>
+            </div>
+
+            <div class="btn-logout" onclick="limparSessao()">
+                <h3>Sair</h3>
+            </div>
+
+        </div>
+        <!-- Fim nav -->
+
+        <div class="dash">
+
+            <div class="containerKpi">
+
+                <div class="cardKpi">
+                    <h4>93%</h4>
+                    <p>Percentual de acertos no quiz</p>
+                    <div class="mensagemKpi positivo">
+                        +8 pontos em relação ao anterior
+                    </div>
+                </div>
+
+                <div class="cardKpi">
+                    <h4>Percepção</h4>
+                    <p>Pior área</p>
+                    <div class="mensagemKpi alerta">
+                        Área que precisa de atenção
+                    </div>
+                </div>
+
+                <div class="cardKpi">
+                    <h4>#3</h4>
+                    <p>Sua posição no ranking</p>
+                    <div class="mensagemKpi positivo">
+                        Entre os 5 melhores
+                    </div>
+                </div>
+
+                <div class="cardKpi">
+                    <h4>14</h4>
+                    <p>Quizzes realizados</p>
+                    <div class="mensagemKpi neutro">
+                        Estudos consistentes
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="graficos">
+
+                <div class="areaGrafico">
+
+                    <div class="tituloGrafico">
+                        <span class="titulo">Desempenho por área</span>
+                        <br>
+                        <span>Resultado do último Quiz</span>
+                    </div>
+
+                    <div class="grafico">
+
+                        <canvas id="myChartCanvas"></canvas>
+                    </div>
+                </div>
+
+                <div class="areaGrafico">
+                    <div class="tituloGrafico">
+                        <span class="titulo">Percentual de acertos</span>
+                        <br>
+                        <span>Resultado do último Quiz</span>
+                    </div>
+                    <div class="grafico">
+                        <canvas id="linhasPontosDia"></canvas>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Fim Dash -->
+        </div>
+
+    </div>
+
+</body>
+
+<script>
+
+    function exibirAquarios() {
+        JSON.parse(sessionStorage.AQUARIOS).forEach(item => {
+            document.getElementById("cardAquarios").innerHTML += `
+                    <div class="card-aquario">
+                        <div class="title-aquario">
+                            <h1>${item.descricao}</h1>
+                        </div>
+                        <div class="desc-aquario">
+                        <div class="temperatura">
+                            <p id="temp_aquario_${item.id}">-°C</p>
+                        </div>
+                        <div class="cor-alerta" id="card_${item.id}"></div>
+                    </div>
+                    </div>
+                    `
+        });
+    }
+
+
+    function plotarGraficoRadar() {
+
+        // As 4 áreas do quiz (as pontas do radar)
+        const labels = ['Percepção auditiva', 'Teoria musical', 'Ritmo', 'Harmonia'];
+
+        // Dados mocados, em % de acertos (0 a 100) para cada área
+        const meusDados = [67, 100, 100, 100];
+        const mediaComunidade = [60, 70, 65, 72];
+
+        const dados = {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Seu desempenho (%)',
+                    data: meusDados,
+                    fill: true,
+                    backgroundColor: 'rgba(23, 104, 255, 0.25)',
+                    borderColor: '#4d9dff',
+                    pointBackgroundColor: '#0A1440',
+                    pointBorderColor: '#ffffff'
+                }
+            ]
+        };
+
+        const config = {
+            type: 'radar',
+            data: dados,
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        min: 0,
+                        max: 100,
+                        ticks: { stepSize: 25, color: '#9db0d8', backdropColor: 'transparent' },
+                        grid: { color: '#0A1440' },
+                        angleLines: { color: '#1a3d8f' },
+                        pointLabels: { color: '#0A1440', font: { size: 14 } }
+                    }
+                },
+                plugins: {
+                    legend: { labels: { color: '#0A1440' } }
+                }
+            }
+        };
+
+        new Chart(document.getElementById('myChartCanvas'), config);
+    }
+
+    function plotarGraficoLinhas() {
+
+        // Dados mocados: total de quizzes feitos em cada dia
+        const labels = ['05/11', '06/11', '07/11', '08/11', '09/11', '10/11', '11/11'];
+        const totais = [1, 0, 2, 1, 3, 2, 1];
+
+        const dados = {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Quizzes realizados',
+                    data: totais,
+                    fill: true,
+                    backgroundColor: 'rgba(23, 104, 255, 0.2)',
+                    borderColor: '#4d9dff',
+                    pointBackgroundColor: '#0A1440',
+                    pointBorderColor: '#ffffff',
+                    tension: 0.3                 // deixa a linha levemente curva
+                }
+            ]
+        };
+
+        const config = {
+            type: 'line',
+            data: dados,
+            options: {
+                maintainAspectRatio: false,      // usa a altura definida no CSS
+                scales: {
+                    x: {
+                        ticks: { color: '#0A1440' },
+                        grid: { color: '#1a3d8f' }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: '#0A1440', precision: 0 },   // só números inteiros
+                        grid: { color: '#1a3d8f' },
+                        title: { display: true, text: 'Quizzes', color: '#9db0d8' }
+                    }
+                },
+                plugins: {
+                    legend: { labels: { color: '#0A1440' } }
+                }
+            }
+        };
+
+        new Chart(document.getElementById('linhasPontosDia'), config);
+    }
+</script>
+
+</html>

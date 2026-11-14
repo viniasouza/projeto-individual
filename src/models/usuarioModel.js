@@ -1,3 +1,4 @@
+const { text } = require("express");
 var database = require("../database/config")
 
 function autenticar(email, senha) {
@@ -16,13 +17,21 @@ function cadastrar(nome, email, senha, username, dtNasc, genero, tocouInstrument
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
     var instrucaoSql = `
-        INSERT INTO usuario (nome, email, senha, username, dtNasc, genero, tocaInstrumento, fkIndicacao, fkEstado, fkGeneroFav) 
-        VALUES ('${nome}', '${email}', '${senha}', '${username}', '${dtNasc}', '${genero}', '${tocouInstrumento}', '${fkEmpresa}', '1', '${fkGeneroMusical}');
+        INSERT INTO usuario (nome, email, senha, username, dtNasc, genero, tocaInstrumento, fkIndicacao, fkGeneroFav, codigoIndicacao, fkEstado) 
+        VALUES ('${nome}', '${email}', '${senha}', '${username}', '${dtNasc}', '${genero}', '${tocouInstrumento}', '${fkEmpresa}', '${fkGeneroMusical}', '${gerarCodigoIndicacao()}', '');
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
+function gerarCodigoIndicacao(){
+    let texto = 'MUSI';
+    let numeroAleatorio = 0;
+
+    numeroAleatorio = Math.floor(Math.random() * 9000) + 1000
+
+    return texto + numeroAleatorio
+}
 module.exports = {
     autenticar,
     cadastrar

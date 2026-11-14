@@ -69,10 +69,12 @@
                         <th>Toca instrumento</th>
                         <th>Gênero favorito</th>
                         <th>Indicações</th>
-                        <th>Dias na plataforma</th>
+                        <th>Quizzes realizados</th>
                     </tr>
                 </thead>
-                <tbody id="corpoRanking"></tbody>
+                <tbody id="corpoRanking">
+                    
+                </tbody>
             </table>
 
             <p id="msgVazio" class="subtituloRanking" hidden>Nenhuma indicação registrada ainda.</p>
@@ -88,7 +90,7 @@
 
     // Busca o ranking na API
     function listarRanking() {
-        fetch("/ranking/listar").then(function (resposta) {
+        fetch("/avisos/listarIndicacao").then(function (resposta) {
 
             if (resposta.status == 204) {
                 document.getElementById("msgVazio").hidden = false;
@@ -133,11 +135,11 @@
             linhas += `
                 <tr class="${classe}">
                     <td class="posicao">${i + 1}</td>
-                    <td>${usuario.nome}</td>
+                    <td>${usuario.username}</td>
                     <td>${toca}</td>
                     <td>${usuario.generoFav}</td>
-                    <td>${usuario.totalIndicacoes}</td>
-                    <td>${usuario.diasNaPlataforma}</td>
+                    <td>${usuario.qtdIndicacoes}</td>
+                    <td>${usuario.qtdQuizzes}</td>
                 </tr>
             `;
         }

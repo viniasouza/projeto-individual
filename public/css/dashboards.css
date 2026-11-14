@@ -401,6 +401,24 @@ canvas {
   color: var(--texto);
   font-weight: 600;
 }
+/* Codigo indicacao */
+.codigoIndicacao{
+  color: white;
+  width: 70%;
+  border: 1px solid #1768ff;
+  border-radius: 5px;
+  padding: 10px;
+}
+.codigoIndicacao .titulo{
+  color: white;
+  font-weight: 800;
+}
+.codigo{
+  font-weight: 600;
+  background-color: #252525;
+  width: 92%;
+  color: #F3F6FB;
+}
 
 /* item atual do menu */
 .btn-nav {

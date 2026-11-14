@@ -183,7 +183,7 @@
 <script>
 
   // Array para armazenar empresas cadastradas para validação de código de ativação 
-  let listaEmpresasCadastradas = [];
+  let listaUsuariosCadastrados = [];
 
   function cadastrar() {
     // aguardar();
@@ -197,6 +197,7 @@
     var generoVar = document.querySelector('input[name=genero]:checked').value;
     var tocouInstrumentoVar = document.querySelector('input[name=instrumento]:checked').value;
     var generoMusicalVar = generoFav_input.value;
+    var estadoVar = estado_input.value;
 
     var senhaVar = senha_input.value;
     var confirmacaoSenhaVar = confirmacao_senha_input.value;
@@ -212,6 +213,7 @@
       generoVar == "" ||
       tocouInstrumentoVar == "" ||
       generoMusicalVar == "0" ||
+      estadoVar == "0" ||
       senhaVar == "" ||
       confirmacaoSenhaVar == "" ||
       senhaVar != confirmacaoSenhaVar
@@ -231,9 +233,9 @@
     } else {
 
       // Verificando se o código de ativação é de alguma empresa cadastrada
-      for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
-        if (listaEmpresasCadastradas[i].codigoIndicacao == codigoVar) {
-          idEmpresaVincular = listaEmpresasCadastradas[i].id
+      for (let i = 0; i < listaUsuariosCadastrados.length; i++) {
+        if (listaUsuariosCadastrados[i].codigoIndicacao == codigoVar) {
+          idEmpresaVincular = listaUsuariosCadastrados[i].id
           console.log("Código de ativação válido.");
           break;
         } else {
@@ -299,10 +301,10 @@
       .then(function (resposta) {
         resposta.json().then((empresas) => {
           empresas.forEach((empresa) => {
-            listaEmpresasCadastradas.push(empresa);
+            listaUsuariosCadastrados.push(empresa);
 
-            console.log("listaEmpresasCadastradas")
-            console.log(listaEmpresasCadastradas[0].codigoIndicacao)
+            console.log("listaUsuariosCadastrados")
+            console.log(listaUsuariosCadastrados[0].codigoIndicacao)
           });
         });
       })

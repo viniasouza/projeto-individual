@@ -70,7 +70,11 @@
             <div class="containerQuiz">
 
                 <div id="pontuacaoEJogo">
-                    <button id="btnIniciarQuiz" onclick="iniciarQuiz()">INICIAR QUIZ</button>
+
+                    <div id="div_cardIniciar">
+                        <img src="https://s2-g1.glbimg.com/L0W-icHmpZwrCU0RrVCBxegcf6k=/0x0:3995x2664/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2023/7/9/bHqciyToeKetWfdiynsg/2-1-.jpg" alt="">
+                        <button id="btnIniciarQuiz" onclick="iniciarQuiz()">INICIAR QUIZ</button>
+                    </div>
                     
                     <div id="pontuacao" class="flex-colunar width-fit-content border-primary">
                         <div id="pontuacaoDuranteJogo" class="flex-colunar padding-8">
@@ -148,124 +152,152 @@
 <script>
     
 const listaDeQuestoes = [
- 
+
     // ---------- PERCEPÇÃO AUDITIVA ----------
     {
         area: "Percepção auditiva",
-        pergunta: "A altura de um som, que diferencia os graves dos agudos, depende de qual característica da onda sonora?",
-        alternativaA: "Amplitude",
-        alternativaB: "Frequência",
-        alternativaC: "Velocidade de propagação",
-        alternativaD: "Duração",
-        alternativaCorreta: "alternativaB"
+        pergunta: "Comparado a um som grave, um som agudo tem frequência:",
+        alternativaA: "Maior, com mais vibrações por segundo",
+        alternativaB: "Menor, com menos vibrações por segundo",
+        alternativaC: "Igual, o que muda é só o volume",
+        alternativaD: "Depende apenas do instrumento",
+        alternativaCorreta: "alternativaA"
     },
     {
         area: "Percepção auditiva",
-        pergunta: "Duas pessoas tocam a mesma nota, uma no piano e outra no violino. O que torna os dois sons diferentes?",
-        alternativaA: "A altura",
-        alternativaB: "A duração",
+        pergunta: "Duas pessoas cantam a mesma nota, com o mesmo volume. O que permite reconhecer qual voz é de quem?",
+        alternativaA: "A duração da nota",
+        alternativaB: "A intensidade",
         alternativaC: "O timbre",
-        alternativaD: "A intensidade",
+        alternativaD: "O compasso",
         alternativaCorreta: "alternativaC"
     },
     {
         area: "Percepção auditiva",
-        pergunta: "A intensidade de um som, o que chamamos de volume, depende de qual característica da onda sonora?",
-        alternativaA: "Amplitude",
-        alternativaB: "Frequência",
-        alternativaC: "Velocidade de propagação",
-        alternativaD: "Duração",
-        alternativaCorreta: "alternativaA"
+        pergunta: "O que pode acontecer com quem ouve música em volume alto por muito tempo?",
+        alternativaA: "O ouvido fica cada vez mais sensível",
+        alternativaB: "Fadiga auditiva e, com a repetição, perda de audição",
+        alternativaC: "Nada, o ouvido sempre se acostuma sem danos",
+        alternativaD: "Só a visão é afetada",
+        alternativaCorreta: "alternativaB"
     },
- 
+
     // ---------- TEORIA MUSICAL ----------
     {
         area: "Teoria musical",
-        pergunta: "Quantas notas diferentes formam a escala de Dó maior?",
-        alternativaA: "5",
-        alternativaB: "8",
-        alternativaC: "12",
-        alternativaD: "7",
+        pergunta: "Qual sequência apresenta as sete notas musicais na ordem correta?",
+        alternativaA: "Dó, Mi, Ré, Fá, Lá, Sol, Si",
+        alternativaB: "Dó, Ré, Fá, Mi, Sol, Si, Lá",
+        alternativaC: "Si, Lá, Dó, Sol, Fá, Ré, Mi",
+        alternativaD: "Dó, Ré, Mi, Fá, Sol, Lá, Si",
         alternativaCorreta: "alternativaD"
     },
     {
         area: "Teoria musical",
         pergunta: "Em um teclado, qual nota fica logo à esquerda do grupo de duas teclas pretas?",
         alternativaA: "Fá",
-        alternativaB: "Sol",
-        alternativaC: "Dó",
+        alternativaB: "Dó",
+        alternativaC: "Sol",
         alternativaD: "Lá",
-        alternativaCorreta: "alternativaC"
+        alternativaCorreta: "alternativaB"
     },
     {
         area: "Teoria musical",
-        pergunta: "O que a clave de Sol indica no início da pauta?",
-        alternativaA: "Onde fica a nota Sol na pauta",
-        alternativaB: "A velocidade da música",
-        alternativaC: "O volume da música",
-        alternativaD: "O número de instrumentos",
-        alternativaCorreta: "alternativaA"
+        pergunta: "O que o sustenido (#) faz com uma nota?",
+        alternativaA: "Abaixa a nota em meio tom",
+        alternativaB: "Dobra a duração da nota",
+        alternativaC: "Sobe a nota em meio tom",
+        alternativaD: "Aumenta o volume da nota",
+        alternativaCorreta: "alternativaC"
     },
- 
+
     // ---------- RITMO ----------
     {
         area: "Ritmo",
-        pergunta: "Em um compasso 4/4, quantos tempos dura uma semínima?",
-        alternativaA: "Meio tempo",
-        alternativaB: "Um tempo",
-        alternativaC: "Dois tempos",
-        alternativaD: "Quatro tempos",
-        alternativaCorreta: "alternativaB"
+        pergunta: "Uma música a 60 BPM e outra a 120 BPM. Qual delas é mais rápida?",
+        alternativaA: "A de 120 BPM, com o dobro de batidas por minuto",
+        alternativaB: "A de 60 BPM",
+        alternativaC: "As duas têm a mesma velocidade",
+        alternativaD: "Depende do instrumento que toca",
+        alternativaCorreta: "alternativaA"
     },
     {
         area: "Ritmo",
-        pergunta: "Qual figura musical dura 4 tempos em um compasso 4/4?",
-        alternativaA: "Mínima",
-        alternativaB: "Semínima",
-        alternativaC: "Semibreve",
-        alternativaD: "Colcheia",
-        alternativaCorreta: "alternativaC"
-    },
-    {
-        area: "Ritmo",
-        pergunta: "O que o BPM mede em uma música?",
-        alternativaA: "O volume da música",
-        alternativaB: "A altura média das notas",
-        alternativaC: "A quantidade de instrumentos",
-        alternativaD: "O número de batidas por minuto",
+        pergunta: "Em um compasso 4/4, quantas semínimas cabem em um compasso?",
+        alternativaA: "2",
+        alternativaB: "3",
+        alternativaC: "8",
+        alternativaD: "4",
         alternativaCorreta: "alternativaD"
     },
- 
+    {
+        area: "Ritmo",
+        pergunta: "Na partitura, o que é uma pausa?",
+        alternativaA: "Um acorde mais longo que os outros",
+        alternativaB: "O sinal de fim da música",
+        alternativaC: "Um sinal de silêncio, que também tem duração definida",
+        alternativaD: "Uma nota tocada mais forte",
+        alternativaCorreta: "alternativaC"
+    },
+
     // ---------- HARMONIA ----------
     {
         area: "Harmonia",
-        pergunta: "Quantas notas formam uma tríade, o acorde básico?",
-        alternativaA: "2",
-        alternativaB: "3",
-        alternativaC: "4",
-        alternativaD: "5",
-        alternativaCorreta: "alternativaB"
-    },
-    {
-        area: "Harmonia",
-        pergunta: "Em geral, qual tipo de acorde transmite uma sensação mais alegre e aberta?",
-        alternativaA: "Maior",
-        alternativaB: "Menor",
-        alternativaC: "Diminuto",
-        alternativaD: "Todos soam iguais",
+        pergunta: "Quais notas formam o acorde de Dó maior?",
+        alternativaA: "Dó, Mi e Sol",
+        alternativaB: "Dó, Ré e Mi",
+        alternativaC: "Dó, Fá e Lá",
+        alternativaD: "Dó, Sol e Si",
         alternativaCorreta: "alternativaA"
     },
     {
         area: "Harmonia",
-        pergunta: "Quais notas formam o acorde de Dó maior?",
-        alternativaA: "Dó, Ré, Mi",
-        alternativaB: "Dó, Fá, Lá",
-        alternativaC: "Dó, Mi, Sol",
-        alternativaD: "Dó, Sol, Si",
+        pergunta: "Em geral, qual tipo de acorde costuma soar mais triste ou introspectivo?",
+        alternativaA: "Maior",
+        alternativaB: "Menor",
+        alternativaC: "Nenhum, todos soam iguais",
+        alternativaD: "Só os acordes tocados rápido",
+        alternativaCorreta: "alternativaB"
+    },
+    {
+        area: "Harmonia",
+        pergunta: "Qual é a diferença entre melodia e harmonia?",
+        alternativaA: "Melodia é a parte mais lenta, e harmonia é a mais rápida",
+        alternativaB: "Melodia é só a letra, e harmonia é só o instrumento",
+        alternativaC: "As duas são a mesma coisa com nomes diferentes",
+        alternativaD: "Melodia é a sequência de notas que cantamos, e harmonia são notas tocadas juntas",
+        alternativaCorreta: "alternativaD"
+    },
+
+    // ---------- MÚSICA E MENTE ----------
+    {
+        area: "Música e mente",
+        pergunta: "O que acontece no cérebro de quem toca um instrumento?",
+        alternativaA: "Só a audição é ativada",
+        alternativaB: "Apenas a área da fala trabalha",
+        alternativaC: "Audição, movimento, visão e memória trabalham ao mesmo tempo",
+        alternativaD: "O cérebro descansa, porque tocar é automático",
         alternativaCorreta: "alternativaC"
+    },
+    {
+        area: "Música e mente",
+        pergunta: "Ao ouvir uma música de que gosta muito, o cérebro pode liberar qual substância, ligada ao prazer e à recompensa?",
+        alternativaA: "Melatonina",
+        alternativaB: "Insulina",
+        alternativaC: "Hemoglobina",
+        alternativaD: "Dopamina",
+        alternativaCorreta: "alternativaD"
+    },
+    {
+        area: "Música e mente",
+        pergunta: "Por que uma música antiga pode trazer de volta uma lembrança de um lugar ou de um momento?",
+        alternativaA: "O cérebro associa os sons a momentos e emoções que vivemos",
+        alternativaB: "O ouvido guarda uma cópia da música",
+        alternativaC: "Músicas antigas têm mais frequências graves",
+        alternativaD: "A música apaga as outras lembranças",
+        alternativaCorreta: "alternativaA"
     }
 ];
-
     // variáveis globais    
     let numeroDaQuestaoAtual = 0
     let pontuacaoFinal = 0
@@ -284,6 +316,7 @@ const listaDeQuestoes = [
         document.getElementById('pontuacao').style.display = "flex"
         document.getElementById('jogo').style.display = "flex"
         document.getElementById('btnIniciarQuiz').style.display = "none"
+        div_cardIniciar.innerHTML = '';
 
         document.getElementById('qtdQuestoes').innerHTML = quantidadeDeQuestoes
 

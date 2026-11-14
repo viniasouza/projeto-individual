@@ -263,6 +263,7 @@
         generoServer: generoVar,
         tocouInstrumentoServer: tocouInstrumentoVar,
         generoMusicalServer: generoMusicalVar,
+        estadoServer: estadoVar,
         idEmpresaVincularServer: idEmpresaVincular
       }),
     })
@@ -293,7 +294,7 @@
     return false;
   }
 
-  // Listando empresas cadastradas 
+  // Listando codigo de usuarios cadastrados 
   function listar() {
     fetch("/empresas/listar", {
       method: "GET",

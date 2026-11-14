@@ -10,7 +10,7 @@
 
 
     <link rel="stylesheet" href="./../css/dashboards.css">
-    <link rel="stylesheet" href="./../css/estilo.css" />
+    <link rel="stylesheet" href="./../css/style.css" />
 
     <script src="../js/sessao.js"></script>
     <script src="../js/alerta.js"></script>
@@ -65,71 +65,77 @@
 
         <!-- Inicio do quiz -->
         <div class="dash">
+            <div class="containerQuiz">
 
-            <div id="pontuacaoEJogo">
-                <button id="btnIniciarQuiz" onclick="iniciarQuiz()">INICIAR QUIZ</button>
-
-                <div id="pontuacao" class="flex-colunar width-fit-content border-primary">
-                    <div id="pontuacaoDuranteJogo" class="flex-colunar padding-8">
-                        <span class="width-fit-content">Quantidade de acertos: <span id="spanCertas"></span></span>
-                        <span class="width-fit-content">Quantidade de erros: <span id="spanErradas"></span></span>
+                <div id="pontuacaoEJogo">
+                    <button id="btnIniciarQuiz" onclick="iniciarQuiz()">INICIAR QUIZ</button>
+                    
+                    <div id="pontuacao" class="flex-colunar width-fit-content border-primary">
+                        <div id="pontuacaoDuranteJogo" class="flex-colunar padding-8">
+                            <span class="width-fit-content">Quantidade de acertos: <span id="spanCertas"></span></span>
+                            <span class="width-fit-content">Quantidade de erros: <span id="spanErradas"></span></span>
+                        </div>
+                        <div id="pontuacaoFinalJogo" class="flex-colunar padding-8">
+                            <span id="pontuacaoFinal" class="width-fit-content">Pontuação Final:
+                                <span id="spanPontuacaoFinal">***</span>
+                            </span>
+                            <span id="msgFinal" class="width-fit-content">***</span>
+                        </div>
                     </div>
-                    <div id="pontuacaoFinalJogo" class="flex-colunar padding-8">
-                        <span id="pontuacaoFinal" class="width-fit-content">Pontuação Final:
-                            <span id="spanPontuacaoFinal">***</span>
-                        </span>
-                        <span id="msgFinal" class="width-fit-content">***</span>
+
+                    <div id="jogo" class="width-fit-content flex-colunar border-secondary">
+
+                        <div id="infoQuestao" class="padding-8 display">
+                            <span>Questão atual: <span id="spanNumeroDaQuestaoAtual"></span> de <span
+                                    id="qtdQuestoes"></span>
+                                questões.</span>
+                        </div>
+                        
+                        <div id="perguntaDaQuestaoAtual" class="padding-8 display">
+                            <span id="spanQuestaoExibida" class="text-bold"></span>
+                        </div>
+
+                        <div id="infoAlternativas" class="padding-8">
+                            <span><em>Escolha uma opção dentre as abaixo:</em></span>
+                        </div>
+
+                        <div id="opcoes" class="flex-colunar padding-8">
+                            <span>
+                                <input type="radio" id="primeiraOpcao" name="option" class="radio"
+                                    value="alternativaA" />
+                                <label for="primeiraOpcao" class="option" id="labelOpcaoUm"></label>
+                            </span>
+                            <span>
+                                <input type="radio" id="segundaOpcao" name="option" class="radio"
+                                    value="alternativaB" />
+                                <label for="segundaOpcao" class="option" id="labelOpcaoDois"></label>
+                            </span>
+                            <span>
+                                <input type="radio" id="terceiraOpcao" name="option" class="radio"
+                                    value="alternativaC" />
+                                <label for="terceiraOpcao" class="option" id="labelOpcaoTres"></label>
+                            </span>
+                            <span>
+                                <input type="radio" id="quartaOpcao" name="option" class="radio" value="alternativaD" />
+                                <label for="quartaOpcao" class="option" id="labelOpcaoQuatro"></label>
+                            </span>
+                        </div>
+
+                        <div id="botoes" class="flex-colunar padding-8">
+                            <button onclick="submeter()" id="btnSubmeter">Submeter resposta</button>
+                            <button onclick="avancar()" id="btnProx" disabled>Avançar para próxima questão</button>
+                            <!-- <button onclick="finalizar()" id="btnConcluir" disabled>Finalizar Quiz</button> -->
+                            <button onclick="tentarNovamente()" id="btnTentarNovamente" disabled>Tentar
+                                novamente</button>
+                        </div>
+
                     </div>
                 </div>
 
-                <div id="jogo" class="width-fit-content flex-colunar border-secondary">
 
-                    <div id="infoQuestao" class="padding-8">
-                        <span>Questão atual: <span id="spanNumeroDaQuestaoAtual"></span> de <span
-                                id="qtdQuestoes"></span>
-                            questões.</span>
-                    </div>
 
-                    <div id="perguntaDaQuestaoAtual" class="padding-8">
-                        <span id="spanQuestaoExibida" class="text-bold"></span>
-                    </div>
 
-                    <div id="infoAlternativas" class="padding-8">
-                        <span><em>Escolha uma opção dentre as abaixo:</em></span>
-                    </div>
-
-                    <div id="opcoes" class="flex-colunar padding-8">
-                        <span>
-                            <input type="radio" id="primeiraOpcao" name="option" class="radio" value="alternativaA" />
-                            <label for="primeiraOpcao" class="option" id="labelOpcaoUm"></label>
-                        </span>
-                        <span>
-                            <input type="radio" id="segundaOpcao" name="option" class="radio" value="alternativaB" />
-                            <label for="segundaOpcao" class="option" id="labelOpcaoDois"></label>
-                        </span>
-                        <span>
-                            <input type="radio" id="terceiraOpcao" name="option" class="radio" value="alternativaC" />
-                            <label for="terceiraOpcao" class="option" id="labelOpcaoTres"></label>
-                        </span>
-                        <span>
-                            <input type="radio" id="quartaOpcao" name="option" class="radio" value="alternativaD" />
-                            <label for="quartaOpcao" class="option" id="labelOpcaoQuatro"></label>
-                        </span>
-                    </div>
-
-                    <div id="botoes" class="flex-colunar padding-8">
-                        <button onclick="submeter()" id="btnSubmeter">Submeter resposta</button>
-                        <button onclick="avancar()" id="btnProx" disabled>Avançar para próxima questão</button>
-                        <!-- <button onclick="finalizar()" id="btnConcluir" disabled>Finalizar Quiz</button> -->
-                        <button onclick="tentarNovamente()" id="btnTentarNovamente" disabled>Tentar novamente</button>
-                    </div>
-
-                </div>
             </div>
-
-
-
-
         </div>
         <!-- fim do quiz -->
 
@@ -138,36 +144,125 @@
 </body>
 
 <script>
-    const listaDeQuestoes = [
-
-        {
-            pergunta: "Qual mês tem 30 dias?",
-            alternativaA: "Janeiro",
-            alternativaB: "Dezembro",
-            alternativaC: "Junho",
-            alternativaD: "Agosto",
-            alternativaCorreta: "alternativaC"
-        },
-
-        {
-            pergunta: "Quantas horas tem em um dia?",
-            alternativaA: "30 horas",
-            alternativaB: "38 horas",
-            alternativaC: "48 horas",
-            alternativaD: "24 horas",
-            alternativaCorreta: "alternativaD"
-        },
-
-        {
-            pergunta: "Qual destes números é ímpar?",
-            alternativaA: "Dez",
-            alternativaB: "Doze",
-            alternativaC: "Oito",
-            alternativaD: "Onze",
-            alternativaCorreta: "alternativaD"
-        }
-
-    ]
+    
+const listaDeQuestoes = [
+ 
+    // ---------- PERCEPÇÃO AUDITIVA ----------
+    {
+        area: "Percepção auditiva",
+        pergunta: "A altura de um som, que diferencia os graves dos agudos, depende de qual característica da onda sonora?",
+        alternativaA: "Amplitude",
+        alternativaB: "Frequência",
+        alternativaC: "Velocidade de propagação",
+        alternativaD: "Duração",
+        alternativaCorreta: "alternativaB"
+    },
+    {
+        area: "Percepção auditiva",
+        pergunta: "Duas pessoas tocam a mesma nota, uma no piano e outra no violino. O que torna os dois sons diferentes?",
+        alternativaA: "A altura",
+        alternativaB: "A duração",
+        alternativaC: "O timbre",
+        alternativaD: "A intensidade",
+        alternativaCorreta: "alternativaC"
+    },
+    {
+        area: "Percepção auditiva",
+        pergunta: "A intensidade de um som, o que chamamos de volume, depende de qual característica da onda sonora?",
+        alternativaA: "Amplitude",
+        alternativaB: "Frequência",
+        alternativaC: "Velocidade de propagação",
+        alternativaD: "Duração",
+        alternativaCorreta: "alternativaA"
+    },
+ 
+    // ---------- TEORIA MUSICAL ----------
+    {
+        area: "Teoria musical",
+        pergunta: "Quantas notas diferentes formam a escala de Dó maior?",
+        alternativaA: "5",
+        alternativaB: "8",
+        alternativaC: "12",
+        alternativaD: "7",
+        alternativaCorreta: "alternativaD"
+    },
+    {
+        area: "Teoria musical",
+        pergunta: "Em um teclado, qual nota fica logo à esquerda do grupo de duas teclas pretas?",
+        alternativaA: "Fá",
+        alternativaB: "Sol",
+        alternativaC: "Dó",
+        alternativaD: "Lá",
+        alternativaCorreta: "alternativaC"
+    },
+    {
+        area: "Teoria musical",
+        pergunta: "O que a clave de Sol indica no início da pauta?",
+        alternativaA: "Onde fica a nota Sol na pauta",
+        alternativaB: "A velocidade da música",
+        alternativaC: "O volume da música",
+        alternativaD: "O número de instrumentos",
+        alternativaCorreta: "alternativaA"
+    },
+ 
+    // ---------- RITMO ----------
+    {
+        area: "Ritmo",
+        pergunta: "Em um compasso 4/4, quantos tempos dura uma semínima?",
+        alternativaA: "Meio tempo",
+        alternativaB: "Um tempo",
+        alternativaC: "Dois tempos",
+        alternativaD: "Quatro tempos",
+        alternativaCorreta: "alternativaB"
+    },
+    {
+        area: "Ritmo",
+        pergunta: "Qual figura musical dura 4 tempos em um compasso 4/4?",
+        alternativaA: "Mínima",
+        alternativaB: "Semínima",
+        alternativaC: "Semibreve",
+        alternativaD: "Colcheia",
+        alternativaCorreta: "alternativaC"
+    },
+    {
+        area: "Ritmo",
+        pergunta: "O que o BPM mede em uma música?",
+        alternativaA: "O volume da música",
+        alternativaB: "A altura média das notas",
+        alternativaC: "A quantidade de instrumentos",
+        alternativaD: "O número de batidas por minuto",
+        alternativaCorreta: "alternativaD"
+    },
+ 
+    // ---------- HARMONIA ----------
+    {
+        area: "Harmonia",
+        pergunta: "Quantas notas formam uma tríade, o acorde básico?",
+        alternativaA: "2",
+        alternativaB: "3",
+        alternativaC: "4",
+        alternativaD: "5",
+        alternativaCorreta: "alternativaB"
+    },
+    {
+        area: "Harmonia",
+        pergunta: "Em geral, qual tipo de acorde transmite uma sensação mais alegre e aberta?",
+        alternativaA: "Maior",
+        alternativaB: "Menor",
+        alternativaC: "Diminuto",
+        alternativaD: "Todos soam iguais",
+        alternativaCorreta: "alternativaA"
+    },
+    {
+        area: "Harmonia",
+        pergunta: "Quais notas formam o acorde de Dó maior?",
+        alternativaA: "Dó, Ré, Mi",
+        alternativaB: "Dó, Fá, Lá",
+        alternativaC: "Dó, Mi, Sol",
+        alternativaD: "Dó, Sol, Si",
+        alternativaCorreta: "alternativaC"
+    }
+];
 
     // variáveis globais    
     let numeroDaQuestaoAtual = 0
@@ -336,14 +431,14 @@
             classComCoresParaMensagemFinal = "text-success-with-bg"
         }
 
-        textoParaMensagemFinal += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertos)*100) + "% das questões."
+        textoParaMensagemFinal += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertos) * 100) + "% das questões."
 
 
         document.getElementById('msgFinal').innerHTML = textoParaMensagemFinal
-        document.getElementById('msgFinal').classList.add(classComCoresParaMensagemFinal) 
+        document.getElementById('msgFinal').classList.add(classComCoresParaMensagemFinal)
         document.getElementById('spanPontuacaoFinal').innerHTML = pontuacaoFinal
 
-        document.getElementById('jogo').classList.add("text-new-gray") 
+        document.getElementById('jogo').classList.add("text-new-gray")
 
         btnProx.disabled = true
         btnSubmeter.disabled = true

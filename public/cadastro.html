@@ -77,9 +77,42 @@
             <span>Gênero:</span>
             <label class="opcao"><input type="radio" name="genero" value="M" /> Masculino</label>
             <label class="opcao"><input type="radio" name="genero" value="F" /> Feminino</label>
-            
+
           </div>
 
+          <div class="campo">
+            <span>Selecione seu estado:</span>
+            <select id="estado_input">
+              <option value="0" disabled selected>Selecione</option>
+              <option value="1">Acre</option>
+              <option value="2">Alagoas</option>
+              <option value="3">Amapá</option>
+              <option value="4">Amazonas</option>
+              <option value="5">Bahia</option>
+              <option value="6">Ceará</option>
+              <option value="7">Distrito Federal</option>
+              <option value="8">Espírito Santo</option>
+              <option value="9">Goiás</option>
+              <option value="10">Maranhão</option>
+              <option value="11">Mato Grosso</option>
+              <option value="12">Mato Grosso do Sul</option>
+              <option value="13">Minas Gerais</option>
+              <option value="14">Pará</option>
+              <option value="15">Paraíba</option>
+              <option value="16">Paraná</option>
+              <option value="17">Pernambuco</option>
+              <option value="18">Piauí</option>
+              <option value="19">Rio de Janeiro</option>
+              <option value="20">Rio Grande do Norte</option>
+              <option value="21">Rio Grande do Sul</option>
+              <option value="22">Rondônia</option>
+              <option value="23">Roraima</option>
+              <option value="24">Santa Catarina</option>
+              <option value="25">São Paulo</option>
+              <option value="26">Sergipe</option>
+              <option value="27">Tocantins</option>
+            </select>
+          </div>
           <span class="secao">Você e a música</span>
 
           <div class="campo opcoes">
@@ -87,6 +120,10 @@
             <label class="opcao"><input type="radio" name="instrumento" value="1" /> Sim</label>
             <label class="opcao"><input type="radio" name="instrumento" value="0" /> Não</label>
           </div>
+
+
+
+
           <div class="campo">
             <span>Gênero musical favorito:</span>
             <select id="generoFav_input">
@@ -189,9 +226,9 @@
       setInterval(sumirMensagem, 5000);
     }
 
-    if(codigoVar == ''){
+    if (codigoVar == '') {
       idEmpresaVincular = '';
-    }else{
+    } else {
 
       // Verificando se o código de ativação é de alguma empresa cadastrada
       for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
@@ -205,7 +242,7 @@
           finalizarAguardar();
         }
       }
-      
+
     }
     // Enviando o valor da nova input
     fetch("/usuarios/cadastrar", {
@@ -274,33 +311,33 @@
       });
   }
 
-  
+
 
   function sumirMensagem() {
     cardErro.style.display = "none";
   }
 
 
-  function criptografarSenha(senha){
+  function criptografarSenha(senha) {
     let tamanhoSenha = senha.length;
     let listaCaracteresSenha = [];
 
     // insere na lista os codigos de tras pra frente
-    for(let i = 0; i < tamanhoSenha; i++){
-        listaCaracteresSenha.unshift(senha.charCodeAt(i).toString(8))
+    for (let i = 0; i < tamanhoSenha; i++) {
+      listaCaracteresSenha.unshift(senha.charCodeAt(i).toString(8))
     }
 
     let senhaFinal = ''
 
     // criptografa a senha 
-    for(let i = 0; i < tamanhoSenha; i++){
-        if(listaCaracteresSenha[i] % 2 == 0){
-            listaCaracteresSenha[i] = Number(listaCaracteresSenha[i]) + 10
-        }else{
-            listaCaracteresSenha[i] = (Number(listaCaracteresSenha[i]) + 20).toString(2)
-        }
+    for (let i = 0; i < tamanhoSenha; i++) {
+      if (listaCaracteresSenha[i] % 2 == 0) {
+        listaCaracteresSenha[i] = Number(listaCaracteresSenha[i]) + 10
+      } else {
+        listaCaracteresSenha[i] = (Number(listaCaracteresSenha[i]) + 20).toString(2)
+      }
 
-        senhaFinal += listaCaracteresSenha[i];
+      senhaFinal += listaCaracteresSenha[i];
     }
 
     return senhaFinal;

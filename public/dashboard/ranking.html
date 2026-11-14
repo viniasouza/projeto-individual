@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musify | Ranking</title>
+
+    <link rel="stylesheet" href="./../css/dashboards.css">
+    <link rel="stylesheet" href="./../css/style.css" />
+    <script src="../js/sessao.js"></script>
+</head>
+
+<body onload="validarSessao(), listarRanking()">
+
+    <div class="janela">
+
+        <div class="header-left dash-header">
+
+            <h1>Musify</h1>
+
+            <div class="hello">
+                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
+            </div>
+
+            <div class="btn-nav-white">
+                <a href="./dashboard.html">
+                    <h3>Dashboard</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav-white">
+                <a href="./quizz.html">
+                    <h3>Quizzes</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav">
+                <h3>Ranking</h3>
+            </div>
+
+            <div class="btn-logout" onclick="limparSessao()">
+                <h3>Sair</h3>
+            </div>
+
+        </div>
+
+        <div class="dash">
+            <h1 class="tituloRanking">Ranking de indicações</h1>
+            <p class="subtituloRanking">Os 30 usuários que mais indicaram amigos para o Musify.</p>
+
+            <table class="tabelaRanking">
+                <thead>
+                    <tr>
+                        <th class="posicao">#</th>
+                        <th>Nome</th>
+                        <th>Toca instrumento</th>
+                        <th>Gênero favorito</th>
+                        <th>Indicações</th>
+                        <th>Dias na plataforma</th>
+                    </tr>
+                </thead>
+                <tbody id="corpoRanking"></tbody>
+            </table>
+
+            <p id="msgVazio" class="subtituloRanking" hidden>Nenhuma indicação registrada ainda.</p>
+        </div>
+
+    </div>
+
+</body>
+
+<script>
+
+    document.getElementById("b_usuario").textContent = sessionStorage.NOME_USUARIO;
+
+    // Busca o ranking na API
+    function listarRanking() {
+        fetch("/ranking/listar").then(function (resposta) {
+
+            if (resposta.status == 204) {
+                document.getElementById("msgVazio").hidden = false;
+                return;
+            }
+
+            if (!resposta.ok) {
+                throw "Houve um erro na API! Código: " + resposta.status;
+            }
+
+            resposta.json().then(function (lista) {
+                console.log("Dados recebidos: ", JSON.stringify(lista));
+                exibirRanking(lista);
+            });
+
+        }).catch(function (erro) {
+            console.error(erro);
+        });
+    }
+
+    // Monta a tabela. Para testar sem a API, chame no console do navegador:
+    // exibirRanking([{ id: 1, nome: "Ana Lima", tocaInstrumento: 1, generoFav: "Rock", totalIndicacoes: 5, diasNaPlataforma: 40 }])
+    function exibirRanking(lista) {
+        var corpo = document.getElementById("corpoRanking");
+        corpo.innerHTML = "";
+
+        for (let i = 0; i < lista.length; i++) {
+            var usuario = lista[i];
+            var linha = document.createElement("tr");
+
+            if (i < 3) {
+                linha.className = "top3";
+            }
+            if (usuario.id == sessionStorage.ID_USUARIO) {
+                linha.classList.add("meuRanking");
+            }
+
+            var valores = [
+                i + 1,
+                usuario.nome,
+                usuario.tocaInstrumento == 1 ? "Sim" : "Não",
+                usuario.generoFav,
+                usuario.totalIndicacoes,
+                usuario.diasNaPlataforma
+            ];
+
+            for (let j = 0; j < valores.length; j++) {
+                var celula = document.createElement("td");
+                celula.textContent = valores[j];
+                if (j == 0) {
+                    celula.className = "posicao";
+                }
+                linha.appendChild(celula);
+            }
+
+            corpo.appendChild(linha);
+        }
+    }
+
+</script>
+
+</html>

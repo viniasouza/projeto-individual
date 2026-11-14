@@ -5,7 +5,7 @@
   --azul: #1768ff;
   --azul-claro: #4d9dff;
   --azul-escuro: #0f3f9e;
-  --fundo: #050b2a;
+  --fundo: #F3F6FB;
   --fundo2: #0a1442;
   --fundo3: #10206a;
   --borda: #1a3d8f;
@@ -198,11 +198,25 @@ body {
   font-weight: 800;
 }
 
-.perigo-frio { background-color: #5c6bc0; }
-.perigo-quente { background-color: #ff7043; }
-.alerta-frio { background-color: #42a5f5; }
-.alerta-quente { background-color: #ffee58; }
-.ideal { background-color: #9ccc65; }
+.perigo-frio {
+  background-color: #5c6bc0;
+}
+
+.perigo-quente {
+  background-color: #ff7043;
+}
+
+.alerta-frio {
+  background-color: #42a5f5;
+}
+
+.alerta-quente {
+  background-color: #ffee58;
+}
+
+.ideal {
+  background-color: #9ccc65;
+}
 
 /* ===== CARDS ===== */
 
@@ -311,9 +325,17 @@ body {
   border-radius: 8px;
 }
 
-.display-none { display: none; }
-.display-flex { display: flex; }
-.display-block { display: block; }
+.display-none {
+  display: none;
+}
+
+.display-flex {
+  display: flex;
+}
+
+.display-block {
+  display: block;
+}
 
 canvas {
   width: 100% !important;
@@ -446,12 +468,12 @@ canvas {
 .cardKpi {
   flex: 1;
   min-width: 170px;
-  box-sizing: border-box;
-  background-color: var(--fundo2);
-  border: 1px solid var(--borda);
+  border: 1px solid #E3E9F5;
   border-radius: 14px;
-  color: var(--texto);
-  padding: 18px 20px;
+  padding: 20px 24px;
+  background-color: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(10, 20, 64, 0.04);
+  color: #0a1442;
   text-align: left;
 }
 
@@ -460,7 +482,7 @@ canvas {
   font-size: clamp(26px, 2.6vw, 36px);
   font-weight: 600;
   line-height: 1.1;
-  color: var(--azul-claro);
+  color: #0f3f9e
 }
 
 .cardKpi p {
@@ -469,6 +491,28 @@ canvas {
   color: var(--texto-suave);
 }
 
+.mensagemKpi {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  margin-top: 14px;
+
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.mensagemKpi.alerta {
+  background-color: #FDF0EF;
+  color: #D9534F;
+}
+
+.mensagemKpi.positivo {
+  background-color: #E8F7F0;
+  color: #1F9D61;
+}
+
+
 /* quiz */
 
 .containerQuiz {
@@ -476,7 +520,7 @@ canvas {
   justify-content: center;
   padding: 10px 0 40px 0;
 }
- 
+
 /* tudo em UMA coluna, centralizado */
 #pontuacaoEJogo {
   display: flex;
@@ -486,7 +530,7 @@ canvas {
   width: 100%;
   max-width: 720px;
 }
- 
+
 
 /* 1) placar: uma linha em cima da outra */
 #pontuacao {
@@ -502,7 +546,7 @@ canvas {
   color: var(--texto);
   text-align: center;
 }
- 
+
 /* cada bloco do placar fica numa LINHA (itens lado a lado) */
 #pontuacaoDuranteJogo,
 #pontuacaoFinalJogo {
@@ -513,7 +557,7 @@ canvas {
   gap: 8px 30px;
   padding: 0;
 }
- 
+
 /* 2) card da pergunta: tudo empilhado e centralizado */
 #jogo {
   flex-direction: column;
@@ -527,7 +571,7 @@ canvas {
   border-radius: 14px;
   color: var(--texto);
 }
- 
+
 #infoQuestao,
 #perguntaDaQuestaoAtual,
 #infoAlternativas {
@@ -538,19 +582,19 @@ canvas {
   padding: 0;
   text-align: center;
 }
- 
+
 #infoQuestao,
 #infoAlternativas {
   font-size: 14px;
   color: var(--texto-suave);
 }
- 
+
 #perguntaDaQuestaoAtual {
   margin: 8px 0;
   font-size: 22px;
   line-height: 1.35;
 }
- 
+
 /* 3) opções: uma embaixo da outra */
 #opcoes {
   display: flex;
@@ -560,7 +604,7 @@ canvas {
   padding: 0;
   margin-top: 4px;
 }
- 
+
 #opcoes span {
   display: flex;
   align-items: center;
@@ -570,11 +614,11 @@ canvas {
   border: 1px solid var(--borda);
   border-radius: 12px;
 }
- 
+
 #opcoes span:has(input:checked) {
   border-color: var(--azul-claro);
 }
- 
+
 /* o seu style.css tem uma regra global para "input" que estraga o radio,
    por isso zeramos aqui */
 #opcoes input {
@@ -586,12 +630,12 @@ canvas {
   accent-color: var(--azul-claro);
   cursor: pointer;
 }
- 
+
 #opcoes input:disabled,
-#opcoes input:disabled + label {
+#opcoes input:disabled+label {
   cursor: default;
 }
- 
+
 .option {
   flex: 1;
   padding: 4px 10px;
@@ -599,7 +643,7 @@ canvas {
   text-align: left;
   cursor: pointer;
 }
- 
+
 /* 4) botões: um embaixo do outro */
 #botoes {
   display: flex;
@@ -609,7 +653,7 @@ canvas {
   padding: 0;
   margin-top: 10px;
 }
- 
+
 #botoes button,
 #btnIniciarQuiz {
   cursor: pointer;
@@ -622,78 +666,105 @@ canvas {
   border-radius: 50px;
   padding: 12px 20px;
 }
- 
+
 #botoes button:hover:not(:disabled),
 #btnIniciarQuiz:hover {
   filter: brightness(1.2);
 }
- 
+
 #botoes button:disabled {
   background-color: var(--fundo3);
   color: var(--texto-suave);
   opacity: 0.6;
   cursor: not-allowed;
 }
- 
+
 /* classes que o seu JavaScript adiciona (acerto, erro, mensagem final) */
 .text-success-with-bg {
   background-color: rgba(46, 160, 67, 0.28);
   color: #c4f5d0;
 }
- 
+
 .text-danger-with-bg {
   background-color: rgba(220, 53, 69, 0.28);
   color: #ffd0d5;
 }
- 
+
 .text-warning-with-bg {
   background-color: rgba(255, 193, 7, 0.22);
   color: #ffe9a8;
 }
- 
+
 #msgFinal {
   padding: 4px 12px;
   border-radius: 8px;
 }
- 
+
 .text-new-gray {
   opacity: 0.75;
 }
- 
+
 .text-bold {
   font-weight: 600;
 }
 
 /* organização dos graficos */
-.graficos{
+.graficos {
   display: flex;
-  gap: 100px;
-   
+  gap: 16px;
+  width: 100%;
 }
-.grafico{
-  height: 50vh;
-  border: 1px solid blue;
+
+.grafico {
+  height: 300px;
+  width: 100%;
+  position: relative;
+}
+
+.areaGrafico {
+  flex: 1;
+  border: 1px solid #E3E9F5;
+  border-radius: 14px;
+  padding: 20px 24px;
+  background-color: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(10, 20, 64, 0.04);
+}
+
+.tituloGrafico {
+  text-align: left;
+  color: black;
+}
+
+.tituloGrafico .titulo {
+  font-size: 18px;
+  color: #0a1442;
+  font-weight: 700;
 }
 
 /* ===== RANKING  ===== */
 
 .tituloRanking {
   margin: 0 0 6px 0;
-  color: var(--texto);
+  color: #0a1442;
   font-weight: 600;
 }
 
 .subtituloRanking {
   margin: 0 0 24px 0;
-  color: var(--texto-suave);
+  color: #5b6b8c;
 }
 
+/* mesmo visual dos cards: fundo branco, borda fina, sombra leve */
 .tabelaRanking {
   width: 100%;
-  border-collapse: collapse;
-  background-color: var(--fundo2);
-  border: 1px solid var(--borda);
-  color: var(--texto);
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  background-color: #ffffff;
+  border: 1px solid #e3e9f5;
+  border-radius: 14px;
+  box-shadow: 0 1px 3px rgba(10, 20, 64, 0.04);
+  color: #0a1442;
 }
 
 .tabelaRanking th {
@@ -701,17 +772,21 @@ canvas {
   text-align: left;
   font-size: 13px;
   font-weight: 500;
-  color: var(--texto-suave);
-  border-bottom: 1px solid var(--borda);
+  color: #5b6b8c;
+  border-bottom: 1px solid #e3e9f5;
 }
 
 .tabelaRanking td {
   padding: 14px 16px;
-  border-bottom: 1px solid var(--fundo3);
+  border-bottom: 1px solid #e3e9f5;
+}
+
+.tabelaRanking tbody tr:last-child td {
+  border-bottom: 0;
 }
 
 .tabelaRanking tbody tr:hover {
-  background-color: var(--fundo3);
+  background-color: #f3f6fb;
 }
 
 .tabelaRanking .posicao {
@@ -722,10 +797,11 @@ canvas {
 /* top 3 em destaque */
 .tabelaRanking .top3 .posicao {
   font-weight: 600;
-  color: var(--azul-claro);
+  color: var(--azul);
 }
 
 /* linha do usuário logado */
 .tabelaRanking .meuRanking {
-  background-color: rgba(23, 104, 255, 0.2);
+  background-color: rgba(23, 104, 255, 0.08);
+  font-weight: 600;
 }

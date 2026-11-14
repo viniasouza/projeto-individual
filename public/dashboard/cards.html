@@ -16,7 +16,7 @@
     <script src="../js/alerta.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
 
-    
+
     <!-- scripts do Chart.js - 2022-1 -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link
@@ -28,6 +28,7 @@
 
     <div class="janela">
 
+        <!-- inicio nav -->
         <div class="header-left dash-header">
 
             <h1>Musify</h1>
@@ -62,6 +63,7 @@
                 <h3>Sair</h3>
             </div>
 
+            <!-- Fim nav -->
         </div>
 
         <div class="dash">
@@ -71,36 +73,67 @@
                 <div class="cardKpi">
                     <h4>93%</h4>
                     <p>Percentual de acertos no quiz</p>
+                    <div class="mensagemKpi positivo">
+                        +8 pontos em relação ao anterior
+                    </div>
                 </div>
-                
+
                 <div class="cardKpi">
                     <h4>Percepção</h4>
                     <p>Pior área</p>
+                    <div class="mensagemKpi alerta">
+                        Área que precisa de atenção
+                    </div>
                 </div>
-                
+
                 <div class="cardKpi">
                     <h4>#3</h4>
                     <p>Sua posição no ranking</p>
+                    <div class="mensagemKpi positivo">
+                        Entre os 5 melhores
+                    </div>
                 </div>
-                
+
                 <div class="cardKpi">
                     <h4>14</h4>
                     <p>Quizzes realizados</p>
+                    <div class="mensagemKpi neutro">
+                        Estudos consistentes
+                    </div>
                 </div>
-                
+
             </div>
 
             <div class="graficos">
 
-                <div class="grafico">
-                    <canvas id="myChartCanvas"></canvas>
+                <div class="areaGrafico">
+
+                    <div class="tituloGrafico">
+                        <span class="titulo">Desempenho por área</span>
+                        <br>
+                        <span>Resultado do último Quiz</span>
+                    </div>
+
+                    <div class="grafico">
+
+                        <canvas id="myChartCanvas"></canvas>
+                    </div>
                 </div>
 
-                <div class="grafico">
-                    <canvas id="linhasPontosDia"></canvas>
+                <div class="areaGrafico">
+                    <div class="tituloGrafico">
+                        <span class="titulo">Desempenho por área</span>
+                        <br>
+                        <span>Resultado do último Quiz</span>
+                    </div>
+                    <div class="grafico">
+                        <canvas id="linhasPontosDia"></canvas>
+                    </div>
                 </div>
             </div>
 
+
+            <!-- Fim Dash -->
         </div>
 
     </div>
@@ -129,100 +162,100 @@
 
 
     function plotarGraficoRadar() {
- 
-    // As 4 áreas do quiz (as pontas do radar)
-    const labels = ['Percepção auditiva', 'Teoria musical', 'Ritmo', 'Harmonia'];
- 
-    // Dados mocados, em % de acertos (0 a 100) para cada área
-    const meusDados = [67, 100, 100, 100];
-    const mediaComunidade = [60, 70, 65, 72];
- 
-    const dados = {
-        labels: labels,
-        datasets: [
-            {
-                label: 'Seu desempenho (%)',
-                data: meusDados,
-                fill: true,
-                backgroundColor: 'rgba(23, 104, 255, 0.25)',
-                borderColor: '#4d9dff',
-                pointBackgroundColor: '#4d9dff',
-                pointBorderColor: '#ffffff'
-            }
-        ]
-    };
- 
-    const config = {
-        type: 'radar',                       
-        data: dados,
-        options: {
-            maintainAspectRatio: false,      
-            scales: {
-                r: {
-                    min: 0,
-                    max: 100,
-                    ticks: { stepSize: 25, color: '#9db0d8', backdropColor: 'transparent' },
-                    grid: { color: '#1a3d8f' },
-                    angleLines: { color: '#1a3d8f' },
-                    pointLabels: { color: '#eef3ff', font: { size: 14 } }
-                }
-            },
-            plugins: {
-                legend: { labels: { color: '#eef3ff' } }
-            }
-        }
-    };
- 
-    new Chart(document.getElementById('myChartCanvas'), config);
-}
 
-function plotarGraficoLinhas() {
- 
-    // Dados mocados: total de quizzes feitos em cada dia
-    const labels = ['05/11', '06/11', '07/11', '08/11', '09/11', '10/11', '11/11'];
-    const totais = [1, 0, 2, 1, 3, 2, 1];
- 
-    const dados = {
-        labels: labels,
-        datasets: [
-            {
-                label: 'Quizzes realizados',
-                data: totais,
-                fill: true,
-                backgroundColor: 'rgba(23, 104, 255, 0.2)',
-                borderColor: '#4d9dff',
-                pointBackgroundColor: '#4d9dff',
-                pointBorderColor: '#ffffff',
-                tension: 0.3                 // deixa a linha levemente curva
-            }
-        ]
-    };
- 
-    const config = {
-        type: 'line',
-        data: dados,
-        options: {
-            maintainAspectRatio: false,      // usa a altura definida no CSS
-            scales: {
-                x: {
-                    ticks: { color: '#9db0d8' },
-                    grid: { color: '#1a3d8f' }
-                },
-                y: {
-                    beginAtZero: true,
-                    ticks: { color: '#9db0d8', precision: 0 },   // só números inteiros
-                    grid: { color: '#1a3d8f' },
-                    title: { display: true, text: 'Quizzes', color: '#9db0d8' }
+        // As 4 áreas do quiz (as pontas do radar)
+        const labels = ['Percepção auditiva', 'Teoria musical', 'Ritmo', 'Harmonia'];
+
+        // Dados mocados, em % de acertos (0 a 100) para cada área
+        const meusDados = [67, 100, 100, 100];
+        const mediaComunidade = [60, 70, 65, 72];
+
+        const dados = {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Seu desempenho (%)',
+                    data: meusDados,
+                    fill: true,
+                    backgroundColor: 'rgba(23, 104, 255, 0.25)',
+                    borderColor: '#4d9dff',
+                    pointBackgroundColor: '#0A1440',
+                    pointBorderColor: '#ffffff'
                 }
-            },
-            plugins: {
-                legend: { labels: { color: '#eef3ff' } }
+            ]
+        };
+
+        const config = {
+            type: 'radar',
+            data: dados,
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        min: 0,
+                        max: 100,
+                        ticks: { stepSize: 25, color: '#9db0d8', backdropColor: 'transparent' },
+                        grid: { color: '#0A1440' },
+                        angleLines: { color: '#1a3d8f' },
+                        pointLabels: { color: '#0A1440', font: { size: 14 } }
+                    }
+                },
+                plugins: {
+                    legend: { labels: { color: '#0A1440' } }
+                }
             }
-        }
-    };
- 
-    new Chart(document.getElementById('linhasPontosDia'), config);
-}
+        };
+
+        new Chart(document.getElementById('myChartCanvas'), config);
+    }
+
+    function plotarGraficoLinhas() {
+
+        // Dados mocados: total de quizzes feitos em cada dia
+        const labels = ['05/11', '06/11', '07/11', '08/11', '09/11', '10/11', '11/11'];
+        const totais = [1, 0, 2, 1, 3, 2, 1];
+
+        const dados = {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Quizzes realizados',
+                    data: totais,
+                    fill: true,
+                    backgroundColor: 'rgba(23, 104, 255, 0.2)',
+                    borderColor: '#4d9dff',
+                    pointBackgroundColor: '#0A1440',
+                    pointBorderColor: '#ffffff',
+                    tension: 0.3                 // deixa a linha levemente curva
+                }
+            ]
+        };
+
+        const config = {
+            type: 'line',
+            data: dados,
+            options: {
+                maintainAspectRatio: false,      // usa a altura definida no CSS
+                scales: {
+                    x: {
+                        ticks: { color: '#0A1440' },
+                        grid: { color: '#1a3d8f' }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: '#0A1440', precision: 0 },   // só números inteiros
+                        grid: { color: '#1a3d8f' },
+                        title: { display: true, text: 'Quizzes', color: '#9db0d8' }
+                    }
+                },
+                plugins: {
+                    legend: { labels: { color: '#0A1440' } }
+                }
+            }
+        };
+
+        new Chart(document.getElementById('linhasPontosDia'), config);
+    }
 </script>
 
 </html>

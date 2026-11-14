@@ -9,7 +9,6 @@
     <title>Musify | Ranking</title>
 
     <link rel="stylesheet" href="./../css/dashboards.css">
-    <link rel="stylesheet" href="./../css/style.css" />
     <script src="../js/sessao.js"></script>
 </head>
 
@@ -17,6 +16,8 @@
 
     <div class="janela">
 
+        
+        <!-- inicio nav -->
         <div class="header-left dash-header">
 
             <h1>Musify</h1>
@@ -26,8 +27,14 @@
             </div>
 
             <div class="btn-nav-white">
-                <a href="./dashboard.html">
+                <a href="./cards.html">
                     <h3>Dashboard</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav">
+                <a href="./ranking.html">
+                    <h3>Ranking Geral</h3>
                 </a>
             </div>
 
@@ -37,14 +44,17 @@
                 </a>
             </div>
 
-            <div class="btn-nav">
-                <h3>Ranking</h3>
+            <div class="btn-nav-white">
+                <a href="./mural.html">
+                    <h3>Mural de Avisos</h3>
+                </a>
             </div>
 
             <div class="btn-logout" onclick="limparSessao()">
                 <h3>Sair</h3>
             </div>
 
+            <!-- Fim nav -->
         </div>
 
         <div class="dash">
@@ -101,41 +111,38 @@
 
     // Monta a tabela. Para testar sem a API, chame no console do navegador:
     // exibirRanking([{ id: 1, nome: "Ana Lima", tocaInstrumento: 1, generoFav: "Rock", totalIndicacoes: 5, diasNaPlataforma: 40 }])
+    
     function exibirRanking(lista) {
-        var corpo = document.getElementById("corpoRanking");
-        corpo.innerHTML = "";
+        var linhas = "";
 
         for (let i = 0; i < lista.length; i++) {
             var usuario = lista[i];
-            var linha = document.createElement("tr");
 
+            // classes da linha: top 3 e usuário logado
+            var classe = "";
             if (i < 3) {
-                linha.className = "top3";
+                classe = "top3";
             }
             if (usuario.id == sessionStorage.ID_USUARIO) {
-                linha.classList.add("meuRanking");
+                classe += " meuRanking";
             }
 
-            var valores = [
-                i + 1,
-                usuario.nome,
-                usuario.tocaInstrumento == 1 ? "Sim" : "Não",
-                usuario.generoFav,
-                usuario.totalIndicacoes,
-                usuario.diasNaPlataforma
-            ];
+            // 1 vira "Sim", 0 vira "Não"
+            var toca = usuario.tocaInstrumento == 1 ? "Sim" : "Não";
 
-            for (let j = 0; j < valores.length; j++) {
-                var celula = document.createElement("td");
-                celula.textContent = valores[j];
-                if (j == 0) {
-                    celula.className = "posicao";
-                }
-                linha.appendChild(celula);
-            }
-
-            corpo.appendChild(linha);
+            linhas += `
+                <tr class="${classe}">
+                    <td class="posicao">${i + 1}</td>
+                    <td>${usuario.nome}</td>
+                    <td>${toca}</td>
+                    <td>${usuario.generoFav}</td>
+                    <td>${usuario.totalIndicacoes}</td>
+                    <td>${usuario.diasNaPlataforma}</td>
+                </tr>
+            `;
         }
+
+        document.getElementById("corpoRanking").innerHTML = linhas;
     }
 
 </script>

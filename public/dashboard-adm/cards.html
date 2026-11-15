@@ -24,14 +24,15 @@
         rel="stylesheet">
 </head>
 
-<body onload="validarSessao(), plotarGraficoRadar(),plotarGraficoLinhas(),  atualizacaoPeriodica()">
+<body
+    onload="validarSessao(), listarUsuariosMes(), listarDadosCards(), listarUsuariosEstado(), listarGeneroUsuarios(), atualizacaoPeriodica()">
 
     <div class="janela">
 
         <!-- inicio nav -->
         <div class="header-left dash-header">
 
-            <h1>Musify</h1>
+            <h1>Painel de <br>Controle</h1>
 
             <div class="hello">
                 <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
@@ -77,19 +78,16 @@
             <div class="containerKpi">
 
                 <div class="cardKpi">
-                    <h4>93%</h4>
-                    <p>Percentual de acertos no quiz</p>
-                    <div class="mensagemKpi positivo">
+                    <h4 id="b_totalUsuarios">93%</h4>
+                    <p>Total de usuários</p>
+                    <div class="mensagemKpi positivo" id="b_usuarioMsgKpi">
                         +8 pontos em relação ao anterior
                     </div>
                 </div>
 
                 <div class="cardKpi">
-                    <h4>Percepção</h4>
-                    <p>Pior área</p>
-                    <div class="mensagemKpi alerta">
-                        Área que precisa de atenção
-                    </div>
+                    <h4 id="b_totalQuizzes">120</h4>
+                    <p>Quizzes realizados pelos usuários</p>
                 </div>
 
                 <div class="cardKpi">
@@ -112,12 +110,24 @@
 
             <div class="graficos">
 
+
+                <div class="areaGrafico">
+                    <div class="tituloGrafico">
+                        <span class="titulo">Usuários cadastrados</span>
+                        <br>
+                        <span>Resultado de cadastro</span>
+                    </div>
+                    <div class="grafico">
+                        <canvas id="linhasPontosDia"></canvas>
+                    </div>
+                </div>
+
                 <div class="areaGrafico">
 
                     <div class="tituloGrafico">
-                        <span class="titulo">Desempenho por área</span>
+                        <span class="titulo">Total de usuários por Estado</span>
                         <br>
-                        <span>Resultado do último Quiz</span>
+                        <span>Top 5 Estados com mais usuários</span>
                     </div>
 
                     <div class="grafico">
@@ -126,18 +136,35 @@
                     </div>
                 </div>
 
-                <div class="areaGrafico">
-                    <div class="tituloGrafico">
-                        <span class="titulo">Percentual de acertos</span>
-                        <br>
-                        <span>Resultado do último Quiz</span>
-                    </div>
-                    <div class="grafico">
-                        <canvas id="linhasPontosDia"></canvas>
-                    </div>
-                </div>
+
+
             </div>
 
+            <div class="graficos">
+
+                <div class="areaGrafico">
+                    <div class="tituloGrafico">
+                        <span class="titulo">Usuários cadastrados</span>
+                        <br>
+                        <span>Resultado de cadastro</span>
+                    </div>
+                    <div class="grafico">
+                        <canvas id="roscaGeneroUsuarios"></canvas>
+                    </div>
+
+                </div>
+                <div class="areaGrafico">
+                    <div class="tituloGrafico">
+                        <span class="titulo">Usuários cadastrados</span>
+                        <br>
+                        <span>Resultado de cadastro</span>
+                    </div>
+                    <div class="grafico">
+                        <canvas id="linhasPontosDia2"></canvas>
+                    </div>
+
+                </div>
+            </div>
 
             <!-- Fim Dash -->
         </div>
@@ -148,40 +175,24 @@
 
 <script>
 
-    function exibirAquarios() {
-        JSON.parse(sessionStorage.AQUARIOS).forEach(item => {
-            document.getElementById("cardAquarios").innerHTML += `
-                    <div class="card-aquario">
-                        <div class="title-aquario">
-                            <h1>${item.descricao}</h1>
-                        </div>
-                        <div class="desc-aquario">
-                        <div class="temperatura">
-                            <p id="temp_aquario_${item.id}">-°C</p>
-                        </div>
-                        <div class="cor-alerta" id="card_${item.id}"></div>
-                    </div>
-                    </div>
-                    `
-        });
-    }
+    function plotarGraficoTop5Estado(lista) {
 
+        let tamanhoLista = lista.length; // total de meses com cadastro
+        // eixo x, de acordo com o resultado do select
+        let labels = [];
+        let valores = [];
 
-    function plotarGraficoRadar() {
-
-        // As 4 áreas do quiz (as pontas do radar)
-        const labels = ['Percepção auditiva', 'Teoria musical', 'Ritmo', 'Harmonia'];
-
-        // Dados mocados, em % de acertos (0 a 100) para cada área
-        const meusDados = [67, 100, 100, 100];
-        const mediaComunidade = [60, 70, 65, 72];
+        for (let i = 0; i < tamanhoLista; i++) {
+            labels.push(lista[i].sigla)
+            valores.push(lista[i].qtdUsuarios)
+        }
 
         const dados = {
             labels: labels,
             datasets: [
                 {
-                    label: 'Seu desempenho (%)',
-                    data: meusDados,
+                    label: 'Qtd Usuários',
+                    data: valores,
                     fill: true,
                     backgroundColor: 'rgba(23, 104, 255, 0.25)',
                     borderColor: '#4d9dff',
@@ -192,7 +203,7 @@
         };
 
         const config = {
-            type: 'radar',
+            type: 'bar',
             data: dados,
             options: {
                 maintainAspectRatio: false,
@@ -215,18 +226,24 @@
         new Chart(document.getElementById('myChartCanvas'), config);
     }
 
-    function plotarGraficoLinhas() {
+    function plotarGraficoLinhas(lista) {
+        let tamanhoLista = lista.length; // total de meses com cadastro
+        // eixo x, de acordo com o resultado do select
+        let labels = [];
+        let valores = [];
 
-        // Dados mocados: total de quizzes feitos em cada dia
-        const labels = ['05/11', '06/11', '07/11', '08/11', '09/11', '10/11', '11/11'];
-        const totais = [1, 0, 2, 1, 3, 2, 1];
+        for (let i = 0; i < tamanhoLista; i++) {
+            labels.push(lista[i].mesCadastro)
+            valores.push(lista[i].qtdUsuarios)
+        }
+
 
         const dados = {
             labels: labels,
             datasets: [
                 {
-                    label: 'Quizzes realizados',
-                    data: totais,
+                    label: 'Usuarios Cadastrados',
+                    data: valores,
                     fill: true,
                     backgroundColor: 'rgba(23, 104, 255, 0.2)',
                     borderColor: '#4d9dff',
@@ -244,14 +261,34 @@
                 maintainAspectRatio: false,      // usa a altura definida no CSS
                 scales: {
                     x: {
-                        ticks: { color: '#0A1440' },
-                        grid: { color: '#1a3d8f' }
+                        ticks: {
+                            color: '#0A1440'
+                        },
+                        grid: {
+                            display: false
+                        },
+                        border: {
+                            display: false
+                        }
                     },
                     y: {
                         beginAtZero: true,
-                        ticks: { color: '#0A1440', precision: 0 },   // só números inteiros
-                        grid: { color: '#1a3d8f' },
-                        title: { display: true, text: 'Quizzes', color: '#9db0d8' }
+                        ticks: {
+                            color: '#0A1440',
+                            precision: 0,
+                            stepSize: 1
+                        },
+                        grid: {
+                            color: 'rgba(26, 61, 143, 0.25)'
+                        },
+                        border: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Usuários',
+                            color: '#9db0d8'
+                        }
                     }
                 },
                 plugins: {
@@ -261,6 +298,152 @@
         };
 
         new Chart(document.getElementById('linhasPontosDia'), config);
+        new Chart(document.getElementById('linhasPontosDia2'), config);
+    }
+
+    function plotarGraficoRosca(lista) {
+
+        let tamanhoLista = lista.length; 
+
+        let labels = [];
+        let valores = [];
+
+        for (let i = 0; i < tamanhoLista; i++) {
+            let genero = 'Feminino';
+            if(lista[i].genero == 'M'){
+                genero = 'Masculino'
+            }
+
+            labels.push(genero)
+            valores.push(lista[i].qtdUsuarios)
+        }
+
+        const dados = {
+            labels: labels,
+            datasets: [{
+                label: 'My First Dataset',
+                data: valores,
+                backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)'
+                ],
+                hoverOffset: 4
+            }]
+        };
+
+        const config = {
+            type: 'doughnut',
+            data: dados,
+            options: {
+                maintainAspectRatio: false,      // usa a altura definida no CSS
+            }
+        };
+
+        new Chart(document.getElementById('roscaGeneroUsuarios'), config);
+    }
+
+
+
+    // listagem dos dados
+
+    function listarDadosCards() {
+        fetch("/dados-adm/listarCardsAdm").then(function (resposta) {
+
+            if (resposta.status == 204) {
+                document.getElementById("msgVazio").hidden = false;
+                return;
+            }
+
+            if (!resposta.ok) {
+                throw "Houve um erro na API! Código: " + resposta.status;
+            }
+
+            resposta.json().then(function (lista) {
+                console.log("Dados recebidos: ", JSON.stringify(lista));
+                b_totalUsuarios.innerHTML = lista[0].total;
+                b_totalQuizzes.innerHTML = lista[0].qtdQuizzes;
+                let percentual = Number(lista[0].percentual);
+                if (percentual != null) {
+                    if (percentual > 0) {
+                        b_usuarioMsgKpi.innerHTML = '+' + (percentual).toFixed(2) + '% que o mês anterior';
+
+                    } else {
+
+                        b_usuarioMsgKpi.innerHTML = '-' + (percentual).toFixed(2) + '% que o mês anterior';
+                    }
+
+                };
+            });
+
+        }).catch(function (erro) {
+            console.error(erro);
+        });
+    }
+
+    function listarUsuariosMes() {
+        fetch("/dados-adm/listarUsuariosMes").then(function (resposta) {
+
+            if (resposta.status == 204) {
+                document.getElementById("msgVazio").hidden = false;
+                return;
+            }
+
+            if (!resposta.ok) {
+                throw "Houve um erro na API! Código: " + resposta.status;
+            }
+
+            resposta.json().then(function (lista) {
+                console.log("Dados recebidos: ", JSON.stringify(lista));
+                plotarGraficoLinhas(lista)
+            });
+
+        }).catch(function (erro) {
+            console.error(erro);
+        });
+    }
+
+    function listarUsuariosEstado() {
+        fetch("/dados-adm/listarUsuariosEstado").then(function (resposta) {
+
+            if (resposta.status == 204) {
+                document.getElementById("msgVazio").hidden = false;
+                return;
+            }
+
+            if (!resposta.ok) {
+                throw "Houve um erro na API! Código: " + resposta.status;
+            }
+
+            resposta.json().then(function (lista) {
+                console.log("Dados recebidos: ", JSON.stringify(lista));
+                plotarGraficoTop5Estado(lista)
+            });
+
+        }).catch(function (erro) {
+            console.error(erro);
+        });
+    }
+
+    function listarGeneroUsuarios() {
+        fetch("/dados-adm/listarUsuariosGenero").then(function (resposta) {
+
+            if (resposta.status == 204) {
+                document.getElementById("msgVazio").hidden = false;
+                return;
+            }
+
+            if (!resposta.ok) {
+                throw "Houve um erro na API! Código: " + resposta.status;
+            }
+
+            resposta.json().then(function (lista) {
+                console.log("Dados recebidos: ", JSON.stringify(lista));
+                plotarGraficoRosca(lista)
+            });
+
+        }).catch(function (erro) {
+            console.error(erro);
+        });
     }
 </script>
 

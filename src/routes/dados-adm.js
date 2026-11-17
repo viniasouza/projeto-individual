@@ -19,4 +19,8 @@ router.get("/listarUsuariosGenero", function (req, res) {
     admController.listarUsuariosGenero(req, res);
 });
 
+router.get("/listarFaixaEtaria", function (req, res) {
+    admController.listarFaixaEtaria(req, res);
+});
+
 module.exports = router;

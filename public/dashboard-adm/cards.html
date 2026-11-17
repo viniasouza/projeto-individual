@@ -25,7 +25,7 @@
 </head>
 
 <body
-    onload="validarSessao(), listarUsuariosMes(), listarDadosCards(), listarUsuariosEstado(), listarGeneroUsuarios(), atualizacaoPeriodica()">
+    onload="validarSessao(), listarUsuariosMes(), listarDadosCards(), listarUsuariosEstado(), listarGeneroUsuarios(), listarFaixaEtaria()">
 
     <div class="janela">
 
@@ -132,21 +132,22 @@
 
                     <div class="grafico">
 
-                        <canvas id="myChartCanvas"></canvas>
+                        <canvas id="graficoTop5Estado"></canvas>
                     </div>
                 </div>
 
 
 
             </div>
+            <br>
 
             <div class="graficos">
 
                 <div class="areaGrafico">
                     <div class="tituloGrafico">
-                        <span class="titulo">Usuários cadastrados</span>
+                        <span class="titulo">Total de usuários por gênero</span>
                         <br>
-                        <span>Resultado de cadastro</span>
+                        <span>Quantidade de usuários</span>
                     </div>
                     <div class="grafico">
                         <canvas id="roscaGeneroUsuarios"></canvas>
@@ -155,12 +156,12 @@
                 </div>
                 <div class="areaGrafico">
                     <div class="tituloGrafico">
-                        <span class="titulo">Usuários cadastrados</span>
+                        <span class="titulo">Usuários por faixa etária</span>
                         <br>
-                        <span>Resultado de cadastro</span>
+                        <span>Quantidade de usuários</span>
                     </div>
                     <div class="grafico">
-                        <canvas id="linhasPontosDia2"></canvas>
+                        <canvas id="graficoFaixaEtaria"></canvas>
                     </div>
 
                 </div>
@@ -175,56 +176,7 @@
 
 <script>
 
-    function plotarGraficoTop5Estado(lista) {
-
-        let tamanhoLista = lista.length; // total de meses com cadastro
-        // eixo x, de acordo com o resultado do select
-        let labels = [];
-        let valores = [];
-
-        for (let i = 0; i < tamanhoLista; i++) {
-            labels.push(lista[i].sigla)
-            valores.push(lista[i].qtdUsuarios)
-        }
-
-        const dados = {
-            labels: labels,
-            datasets: [
-                {
-                    label: 'Qtd Usuários',
-                    data: valores,
-                    fill: true,
-                    backgroundColor: 'rgba(23, 104, 255, 0.25)',
-                    borderColor: '#4d9dff',
-                    pointBackgroundColor: '#0A1440',
-                    pointBorderColor: '#ffffff'
-                }
-            ]
-        };
-
-        const config = {
-            type: 'bar',
-            data: dados,
-            options: {
-                maintainAspectRatio: false,
-                scales: {
-                    r: {
-                        min: 0,
-                        max: 100,
-                        ticks: { stepSize: 25, color: '#9db0d8', backdropColor: 'transparent' },
-                        grid: { color: '#0A1440' },
-                        angleLines: { color: '#1a3d8f' },
-                        pointLabels: { color: '#0A1440', font: { size: 14 } }
-                    }
-                },
-                plugins: {
-                    legend: { labels: { color: '#0A1440' } }
-                }
-            }
-        };
-
-        new Chart(document.getElementById('myChartCanvas'), config);
-    }
+    
 
     function plotarGraficoLinhas(lista) {
         let tamanhoLista = lista.length; // total de meses com cadastro
@@ -298,19 +250,78 @@
         };
 
         new Chart(document.getElementById('linhasPontosDia'), config);
-        new Chart(document.getElementById('linhasPontosDia2'), config);
+    }
+
+    function plotarGraficoTop5Estado(lista) {
+
+        let tamanhoLista = lista.length; // total de meses com cadastro
+        // eixo x, de acordo com o resultado do select
+        let labels = [];
+        let valores = [];
+
+        for (let i = 0; i < tamanhoLista; i++) {
+            labels.push(lista[i].sigla)
+            valores.push(lista[i].qtdUsuarios)
+        }
+
+
+
+        const dados = {
+            labels: labels,
+            datasets: [{
+                label: 'Qtd Usuários',
+                data: valores,
+                backgroundColor: [
+                    'rgba(23, 104, 255, 1)',    // 1º: forte
+                    'rgba(23, 104, 255, 0.75)',
+                    'rgba(23, 104, 255, 0.55)',
+                    'rgba(23, 104, 255, 0.35)',
+                    'rgba(23, 104, 255, 0.15)'
+                ],
+                borderColor: '#4d9dff',
+                borderWidth: 1,
+                borderRadius: 6
+            }]
+        };
+
+        const config = {
+            type: 'bar',
+            data: dados,
+            options: {
+                indexAxis: 'y',               // <- deixa horizontal
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: { color: '#0A1440', precision: 0 },
+                        grid: { color: 'rgba(26, 61, 143, 0.25)' },
+                        border: { display: false }
+                    },
+                    y: {
+                        ticks: { color: '#0A1440' },
+                        grid: { display: false },
+                        border: { display: false }
+                    }
+                },
+                plugins: {
+                    legend: { display: false }  // com 1 série só, a legenda é desnecessária
+                }
+            }
+        };
+
+        new Chart(document.getElementById('graficoTop5Estado'), config);
     }
 
     function plotarGraficoRosca(lista) {
 
-        let tamanhoLista = lista.length; 
+        let tamanhoLista = lista.length;
 
         let labels = [];
         let valores = [];
 
         for (let i = 0; i < tamanhoLista; i++) {
             let genero = 'Feminino';
-            if(lista[i].genero == 'M'){
+            if (lista[i].genero == 'M') {
                 genero = 'Masculino'
             }
 
@@ -321,7 +332,7 @@
         const dados = {
             labels: labels,
             datasets: [{
-                label: 'My First Dataset',
+                label: 'Usuários Cadastrados',
                 data: valores,
                 backgroundColor: [
                     'rgb(255, 99, 132)',
@@ -340,6 +351,58 @@
         };
 
         new Chart(document.getElementById('roscaGeneroUsuarios'), config);
+
+    }
+
+    function plotarGraficoFaixaEtaria(lista) {
+
+        let tamanhoLista = lista.length; // total de meses com cadastro
+        // eixo x, de acordo com o resultado do select
+        let labels = [];
+        let valores = [];
+
+        for (let i = 0; i < tamanhoLista; i++) {
+            labels.push(lista[i].faixa)
+            valores.push(lista[i].qtdUsuarios)
+        }
+
+        const dados = {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Qtd Usuários',
+                    data: valores,
+                    fill: true,
+                    backgroundColor: 'rgba(23, 104, 255, 0.25)',
+                    borderColor: '#4d9dff',
+                    pointBackgroundColor: '#0A1440',
+                    pointBorderColor: '#ffffff'
+                }
+            ]
+        };
+
+        const config = {
+            type: 'bar',
+            data: dados,
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        min: 0,
+                        max: 100,
+                        ticks: { stepSize: 25, color: '#9db0d8', backdropColor: 'transparent' },
+                        grid: { color: '#0A1440' },
+                        angleLines: { color: '#1a3d8f' },
+                        pointLabels: { color: '#0A1440', font: { size: 14 } }
+                    }
+                },
+                plugins: {
+                    legend: { labels: { color: '#0A1440' } }
+                }
+            }
+        };
+
+        new Chart(document.getElementById('graficoFaixaEtaria'), config);
     }
 
 
@@ -439,6 +502,28 @@
             resposta.json().then(function (lista) {
                 console.log("Dados recebidos: ", JSON.stringify(lista));
                 plotarGraficoRosca(lista)
+            });
+
+        }).catch(function (erro) {
+            console.error(erro);
+        });
+    }
+
+    function listarFaixaEtaria() {
+        fetch("/dados-adm/listarFaixaEtaria").then(function (resposta) {
+
+            if (resposta.status == 204) {
+                document.getElementById("msgVazio").hidden = false;
+                return;
+            }
+
+            if (!resposta.ok) {
+                throw "Houve um erro na API! Código: " + resposta.status;
+            }
+
+            resposta.json().then(function (lista) {
+                console.log("Dados recebidos: ", JSON.stringify(lista));
+                plotarGraficoFaixaEtaria(lista)
             });
 
         }).catch(function (erro) {

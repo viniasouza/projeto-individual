@@ -69,10 +69,25 @@ function listarUsuariosGenero(req, res) {
     });
 }
 
+function listarFaixaEtaria(req, res) {
+    admModel.listarFaixaEtaria().then(function (resultado) {
+        if (resultado.length > 0) {
+            res.status(200).json(resultado);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as indicações: ", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 module.exports = {
     listar,
     listarCardsAdm,
     listarUsuariosMes,
     listarUsuariosEstado,
-    listarUsuariosGenero
+    listarUsuariosGenero,
+    listarFaixaEtaria
 }

@@ -20,7 +20,7 @@
         rel="stylesheet">
 </head>
 
-<body onload="validarSessao(),onloadEsconder()">
+<body onload="validarSessaoAdm(),onloadEsconder()">
 
     <div class="janela">
 
@@ -306,8 +306,14 @@
         }
     ];
 
-    // armazena os acertos de cada area na ordem
-    let listaQtdAcertos = [];
+    // armazena os acertos de cada área por nome (uso dos nomes exatos do CHECK do banco)
+    let acertosPorArea = {
+        'Percepção auditiva': 0,
+        'Teoria musical': 0,
+        'Ritmo': 0,
+        'Harmonia': 0,
+        'Música e mente': 0
+    };
 
     // variáveis globais    
     let numeroDaQuestaoAtual = 0
@@ -340,8 +346,14 @@
         // btnConcluir.disabled = true
         btnTentarNovamente.disabled = true
 
-        // limpa a lista
-        listaQtdAcertos = [];
+        // limpa a contagem por área
+        acertosPorArea = {
+            'Percepção auditiva': 0,
+            'Teoria musical': 0,
+            'Ritmo': 0,
+            'Harmonia': 0,
+            'Música e mente': 0
+        };
     }
 
     function preencherHTMLcomQuestaoAtual(index) {
@@ -430,10 +442,14 @@
 
         // verifica se resposta assinalada é correta
         options.forEach((option) => {
-            if (option.checked === true && option.value === respostaQuestaoAtual) {
+                if (option.checked === true && option.value === respostaQuestaoAtual) {
                 document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
                 pontuacaoFinal++
                 certas++
+                // contabiliza acerto por área
+                if (acertosPorArea[questaoAtual.area] !== undefined) {
+                    acertosPorArea[questaoAtual.area]++;
+                }
                 document.getElementById("spanCertas").innerHTML = certas
                 numeroDaQuestaoAtual++
             } else if (option.checked && option.value !== respostaQuestaoAtual) {
@@ -499,12 +515,7 @@
         // Inserindo os registros do quiz no banco
         cadastrarQuiz();
 
-        // Insere no bd a qtd de acertos de cada area
-        for(let i = 1; i <= 5; i++){
-
-
-            inserirRespostas()
-        }
+        // a inserção dos acertos por área será feita após receber o id da tentativa
 
     }
 
@@ -531,6 +542,8 @@
                         console.log(JSON.stringify(json));
                         sessionStorage.ID_QUIZ = json.insertId;
 
+                        // após receber o id da tentativa, enviar os acertos por área
+                        enviarAcertosPorArea(json.insertId);
                     });
 
 
@@ -547,44 +560,30 @@
         return false;
     }
 
-    function inserirRespostas() {
-        // Enviando o valor da nova input
+    function enviarAcertosPorArea(idTentativa) {
+        // transforma o objeto em array de {area, qtdAcertos}
+        const lista = Object.keys(acertosPorArea).map(area => ({ area: area, qtdAcertos: acertosPorArea[area] }));
+
         fetch("/quiz/inserirRespostas", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                // crie um atributo que recebe o valor recuperado aqui
-
-                fkUsuarioServer: sessionStorage.ID_USUARIO
+                fkTentativaServer: idTentativa,
+                acertosServer: lista
             }),
         })
             .then(function (resposta) {
-                console.log("resposta: ", resposta);
-
                 if (resposta.ok) {
-
-                    resposta.json().then(json => {
-                        console.log(json);
-                        console.log(JSON.stringify(json));
-                        sessionStorage.ID_QUIZ = json.insertId;
-
-                    });
-
-
+                    console.log("Acertos enviados com sucesso");
                 } else {
-                    throw "Houve um erro ao tentar inserir o quiz!";
-
+                    resposta.text().then(t => console.error("Erro ao enviar acertos:", t));
                 }
             })
-            .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
-                console.log(sessionStorage.ID_USUARIO)
+            .catch(function (erro) {
+                console.error("Erro no fetch inserirRespostas:", erro);
             });
-
-        return false;
-
     }
 </script>
 

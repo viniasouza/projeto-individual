@@ -161,6 +161,7 @@ body {
 
 .btnBanner {
   display: flex;
+  gap: 16px; /* espaço entre os botões do banner */
 }
 
 .btnBanner a {
@@ -175,10 +176,29 @@ body {
   border-radius: 2vh;
 }
 
+.btnBanner .btnAzul {
+  display: inline-block; /* garante que o link ocupe a área */
+}
+
+.btnBanner .btnAzul:hover {
+  filter: brightness(1.12);
+}
+
 .btnTransparente {
   border: solid 1px var(--azul);
   padding: 1vh 3vh 1vh 3vh;
   border-radius: 3vh;
+}
+
+.btnBanner .btnTransparente {
+  display: inline-block;
+}
+
+.btnBanner .btnTransparente:hover {
+  background-color: var(--azul);
+  color: #fff;
+  filter: brightness(1.05);
+  border-color: transparent;
 }
 
 /* A MÚSICA NA NOSSA VIDA + CHAMADA DO DASHBOARD */

@@ -125,11 +125,15 @@
                     sessionStorage.ID_USUARIO = json.id;
                     sessionStorage.CODIGO_USUARIO = json.codigoIndicacao;
                     sessionStorage.SENHA_USUARIO = json.senha;
-                    
-                    // sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
+                    sessionStorage.PERMISSAO = json.permissao; // armazena permissao (user / adm)
 
+                    // redireciona conforme a permissao
                     setTimeout(function () {
-                        window.location = "./dashboard/cards.html";
+                        if (json.permissao && json.permissao === 'adm') {
+                            window.location = "./dashboard-adm/cards.html";
+                        } else {
+                            window.location = "./dashboard/cards.html";
+                        }
                     }, 1000); // apenas para exibir o loading
 
                 });

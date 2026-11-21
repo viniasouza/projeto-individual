@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Musify | Página Inicial</title>
+  <title>Musify | Sobre mim</title>
 
   <script src="./js/sessao.js"></script>
 
@@ -15,7 +15,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
 </head>
 
-<body>
+<body class="paginaSobre">
+
   <!-- Header inicio -->
   <div class="padding-header">
     <div class="header">
@@ -38,55 +39,143 @@
   <!-- Header fim -->
 
   <!-- seção apresentacao -->
-
   <div class="apresentacaoSobre">
-    <div class="sobreTexto">
-      <span class="subtituloSobre">Sobre mim</span>
-      <br>
-      <br>
-      <span class="tituloSobre">Oi, eu sou o Vinicius.</span>
-      <br>
-      <span class="textoSobre">Estudante de Análise e Desenvolvimento de Sistemas na SP Tech School, tecladista desde
-        criança e criador do Musify.</span>
-      <br><br>
-      <br><br>
-      <div class="topicosSobre">
-        <span>Muito Alegre</span>
-        |
-        <span>Otimista</span>
-        |
-        <span>Amo resolver problemas</span>
+    <div class="container">
+
+      <div class="sobreTexto">
+        <span class="subtituloSobre">Sobre mim</span>
+        <h1 class="tituloSobre">Oi, eu sou o Vinicius.</h1>
+        <p class="textoSobre">Estudante de Análise e Desenvolvimento de Sistemas na SP Tech School, tecladista desde
+          criança e criador do Musify.</p>
+
+        <div class="topicosSobre">
+          <span>Muito alegre</span>
+          <span>Otimista</span>
+          <span>Amo resolver problemas</span>
+        </div>
       </div>
-    </div>
-    <div class="sobreImagem">
-      <img src="assets/img-teclado/vini.jpeg" alt="">
+
+      <div class="sobreImagem">
+        <img src="assets/img-teclado/vini.jpeg" alt="Vinicius sorrindo, de braços cruzados">
+      </div>
+
     </div>
   </div>
-
 
   <!-- parte como tudo começou -->
-
   <div class="comeco">
-    <div class="sobreTexto">
-      <span class="subtituloSobre">Sobre mim</span>
-      <br>
-      <span class="tituloNormal">Como tudo começou</span>
-      <br>
-      <span class="textoSobre">Conto de onde isso veio. A história é curta: um teclado, o ouvido e a banda da minha
-        família.</span>
-      <br><br>
-      <div class="topicosSobre">
-        <span>Muito Alegre</span>
-        |
-        <span>Otimista</span>
-        |
-        <span>Amo resolver problemas</span>
+    <div class="container">
+
+      <div>
+        <h2 class="tituloNormal">Como tudo <span class="textoAzul">começou</span></h2>
+        <p>Tudo começou quando eu tinha 7 ou 8 anos. Havia um teclado em casa e eu comecei a aprender. Venho de uma
+          família cristã e meu pai é músico, o que contribuiu muito para esse começo.</p>
+        <p>Na música encontrei uma forma de me expressar, criar e planejar. Isso me trouxe conhecimentos e
+          experiências, como tocar em bandas, entender o meu espaço e a minha função dentro do grupo e sentir a música.
+        </p>
       </div>
-    </div>
-    <div class="sobreImagem">
-      <img src="assets/img-teclado/vini.jpeg" alt="">
+
+      <div class="fatos">
+        <div class="fato">
+          <b>7 ou 8 anos</b>
+          <span>quando comecei a aprender teclado</span>
+        </div>
+        <div class="fato">
+          <b>Em casa</b>
+          <span>com um teclado e um pai músico</span>
+        </div>
+        <div class="fato">
+          <b>Em banda</b>
+          <span>onde aprendi sobre espaço, função e sincronia</span>
+        </div>
+      </div>
+
     </div>
   </div>
+
+  <!-- a música na minha linha da vida -->
+  <div class="linhaVida">
+    <div class="container">
+
+      <div class="linhaVidaTexto">
+        <h2 class="tituloNormal">A música na minha <span class="textoAzul">linha da vida</span></h2>
+        <p>Alguns momentos que marcaram a minha relação com a música, do primeiro teclado até hoje.</p>
+      </div>
+
+      <ul class="linhaTempo">
+        <li>
+          <span class="marco">7 ou 8 anos</span>
+          <h3>O teclado em casa</h3>
+          <p>Comecei a aprender com um teclado que tinha em casa, com o incentivo da minha família e do meu pai, que é
+            músico.</p>
+        </li>
+        <li>
+          <span class="marco">Com o tempo</span>
+          <h3>Expressar, criar e planejar</h3>
+          <p>Na música encontrei uma forma de me expressar, de criar e de planejar.</p>
+        </li>
+        <li>
+          <span class="marco">Em grupo</span>
+          <h3>Tocando em bandas</h3>
+          <p>Aprendi a entender o meu espaço e a minha função dentro do grupo, e a sentir a música.</p>
+        </li>
+        <li>
+          <span class="marco">Momentos especiais</span>
+          <h3>Tocando em casamentos</h3>
+          <p>[Confirme e conte um momento marcante de quando você tocou em casamentos.]</p>
+        </li>
+        <li>
+          <span class="marco">Hoje</span>
+          <h3>Escutando e criando o Musify</h3>
+          <p>Tive que abrir mão de tocar e, atualmente, principalmente escuto música. Transformei essa relação em um
+            projeto: o Musify.</p>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+  <!-- agradecimentos -->
+  <div class="agradecimentos">
+    <div class="container">
+
+      <div>
+        <h2 class="tituloNormal"><span class="textoAzul">Agradecimentos</span></h2>
+        <p>Nada disso seria possível sozinho. Obrigado a quem esteve comigo nessa caminhada.</p>
+      </div>
+
+      <div class="cardsAgradecimento">
+
+        <div class="agradecimento">
+          <img src="assets/img-teclado/pai.jpeg" alt="Meu pai">
+          <h3>Meu pai</h3>
+          <p>[Nome]. Me apresentou à música e me incentivou desde o começo. Com ele aprendi a tocar junto.</p>
+        </div>
+
+        <div class="agradecimento">
+          <img src="assets/img-teclado/familia.jpeg" alt="Minha família">
+          <h3>Minha família</h3>
+          <p>[Nomes]. A minha base em tudo, pelo apoio e por acreditarem em mim.</p>
+        </div>
+
+        <div class="agradecimento">
+          <img src="assets/img-teclado/sptech.jpg" alt="Meus professores">
+          <h3>Meus professores</h3>
+          <p>[Nomes]. De um professor de música levo uma frase: "Se você não tentou 1 milhão de vezes, você não pode
+            falar que não consegue."</p>
+        </div>
+
+        <div class="agradecimento">
+          <img src="assets/img-teclado/corrida.jpeg" alt="Meus amigos e colegas">
+          <h3>Amigos e colegas</h3>
+          <p>[Nomes]. Pela troca, pelas ideias e pelo apoio na música e na faculdade.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
 </body>
 
 </html>

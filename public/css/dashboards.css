@@ -505,8 +505,9 @@ canvas {
 
 .cardKpi p {
   margin: 0;
-  font-size: 14px;
-  color: var(--texto-suave);
+  font-size: 15px;
+  color: var(--fundo2);
+  font-weight: 500;
 }
 
 .mensagemKpi {
@@ -516,7 +517,7 @@ canvas {
   margin-top: 14px;
 
   border-radius: 999px;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
 }
 

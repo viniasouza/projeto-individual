@@ -798,68 +798,266 @@ input {
 }
 
 
-/* Tela sobre mim */
+/* ===== TELA SOBRE MIM ===== */
 
-.apresentacaoSobre{
+/* navbar sólida nesta página: sobre as seções claras ela não muda de cor */
+.paginaSobre .header {
+  background-color: var(--fundo);
+}
+
+/* 1) APRESENTAÇÃO (mesmo clima escuro do banner da Home) */
+
+.apresentacaoSobre {
+  min-height: 100vh;
   display: flex;
-  flex-direction: row;
   align-items: center;
-  height: 100vh;
+  padding: 120px 0 80px 0;
+  color: #fff;
+  background-color: var(--fundo);
+  background-image: radial-gradient(circle at 15% 20%, rgba(23, 104, 255, 0.35), transparent 45%);
 }
 
-.sobreTexto{
-  height: 50vh;
-  width: 50%;
-  padding-left: 10vh;
+.apresentacaoSobre .container {
+  align-items: center;
+  justify-content: space-between;
+  gap: 80px;
 }
 
-.sobreTexto .subtituloSobre{
+.sobreTexto {
+  flex: 1;
+  max-width: 560px;
+}
+
+.subtituloSobre {
+  display: block;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   color: var(--azul-claro);
-  font-weight: 800;
-
 }
-.sobreTexto .tituloSobre{
+
+.tituloSobre {
+  margin: 0 0 20px 0;
+  font-size: 56px;
+  line-height: 1.1;
   font-weight: 600;
-  font-size: 13vh;
-
-}
-.sobreTexto .textoSobre{
-  font-weight: 200;
-  font-size: 4vh;
-
 }
 
-.topicosSobre{
+.textoSobre {
+  margin: 0 0 32px 0;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #c9d6f2;
+}
+
+/* características em "pílulas" */
+.topicosSobre {
   display: flex;
-  justify-content: space-around;
-  width: 75%;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-/* imagem a direita do texto */
-.sobreImagem{
-  height: 50vh;
-  width: 50%;
-  background-color: pink;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.topicosSobre span {
+  padding: 8px 18px;
+  border: 1px solid var(--borda);
+  border-radius: 50px;
+  background-color: var(--fundo2);
+  font-size: 14px;
+  color: #eef3ff;
 }
-.sobreImagem img{
-  height: 65vh;
+
+/* foto com um bloco azul deslocado atrás (feito só com sombra) */
+.sobreImagem img {
+  display: block;
+  width: 420px;
+  max-width: 100%;
   border-radius: 20px;
+  box-shadow: 24px 24px 0 var(--azul-escuro);
 }
 
-/* Como tudo começou */
+/* 2) COMO TUDO COMEÇOU (seção clara) */
+
 .comeco {
-  display: flex;
+  padding: 96px 0;
   background-color: var(--claro2);
-  flex-direction: row;
-  align-items: center;
-  height: 100vh;
+  color: var(--texto-escuro);
 }
 
-.sobreTexto .tituloNormal{
-  font-weight: 600;
-  font-size: 8vh;
+.comeco .container {
+  flex-direction: column;
+  gap: 48px;
+}
 
+.tituloNormal {
+  margin: 0 0 20px 0;
+  font-size: 36px;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.comeco p {
+  margin: 0 0 14px 0;
+  max-width: 62ch;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+/* três fatos em colunas, com a linha azul ao lado (igual aos números da Home) */
+.fatos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.fato {
+  padding-left: 20px;
+  border-left: 2px solid var(--azul);
+}
+
+.fato b {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--azul);
+}
+
+.fato span {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* 3) A MÚSICA NA MINHA LINHA DA VIDA (seção escura) */
+
+.linhaVida {
+  padding: 96px 0;
+  background-color: var(--fundo);
+  color: #fff;
+}
+
+.linhaVida .container {
+  align-items: flex-start;
+  gap: 80px;
+}
+
+.linhaVidaTexto {
+  flex: 1;
+}
+
+.linhaVidaTexto p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--texto-suave);
+}
+
+.linhaTempo {
+  flex: 1.4;
+  margin: 0;
+  padding: 0 0 0 32px;
+  list-style: none;
+  border-left: 2px solid var(--borda);
+}
+
+.linhaTempo li {
+  position: relative;
+  padding-bottom: 36px;
+}
+
+.linhaTempo li:last-child {
+  padding-bottom: 0;
+}
+
+/* bolinha de cada momento, em cima da linha */
+.linhaTempo li::before {
+  content: "";
+  position: absolute;
+  left: -42px;
+  top: 4px;
+  box-sizing: border-box;
+  width: 18px;
+  height: 18px;
+  border: 3px solid var(--fundo);
+  border-radius: 50%;
+  background-color: var(--azul);
+}
+
+.marco {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--azul-claro);
+}
+
+.linhaTempo h3 {
+  margin: 6px 0 8px 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.linhaTempo p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--texto-suave);
+}
+
+/* 4) AGRADECIMENTOS (seção clara) */
+
+.agradecimentos {
+  padding: 96px 0;
+  background-color: var(--claro2);
+  color: var(--texto-escuro);
+}
+
+.agradecimentos .container {
+  flex-direction: column;
+  gap: 48px;
+}
+
+.agradecimentos p {
+  margin: 0;
+  max-width: 62ch;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.cardsAgradecimento {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.agradecimento {
+  padding: 16px;
+  background-color: #fff;
+  border: 1px solid #d3dcf0;
+  border-radius: 16px;
+}
+
+.agradecimento img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  background-color: var(--fundo3);
+  font-size: 14px;
+  color: var(--texto-suave);
+}
+
+.agradecimento h3 {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.agradecimento p {
+  font-size: 15px;
+  line-height: 1.6;
 }

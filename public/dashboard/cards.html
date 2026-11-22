@@ -6,14 +6,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AquaTech | Tempo Real</title>
+    <title>Musify | Dashboard</title>
 
 
     <link rel="stylesheet" href="./../css/dashboards.css">
     <link rel="stylesheet" href="./../css/estilo.css" />
 
     <script src="../js/sessao.js"></script>
-    <script src="../js/alerta.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
 
 
@@ -24,7 +23,7 @@
         rel="stylesheet">
 </head>
 
-<body onload="validarSessao(), carregarDadosDashboard(), atualizacaoPeriodica()">
+<body onload="validarSessao(), listarCardsUsuario(), listarRadarUsuario(), listarQuizzesDia()">
 
     <div class="janela">
 
@@ -79,31 +78,21 @@
                 <div class="cardKpi">
                     <h4 id="percentualKpi">-</h4>
                     <p>Percentual de acertos no quiz</p>
-                    <div class="mensagemKpi positivo">
-                        +8 pontos em relação ao anterior
-                    </div>
                 </div>
 
                 <div class="cardKpi">
                     <h4 id="piorAreaKpi">-</h4>
-                    <p>Pior área</p>
-                    <div class="mensagemKpi alerta">
-                        Área que precisa de atenção
-                    </div>
+                    <p>Pior área no último quiz</p>
                 </div>
 
                 <div class="cardKpi">
                     <h4 id="posicaoKpi">-</h4>
                     <p>Sua posição no ranking</p>
-                    <div class="mensagemKpi positivo">
-                        Entre os 5 melhores
-                    </div>
                 </div>
 
                 <div class="cardKpi">
                     <h4 id="quizzesKpi">0</h4>
                     <p>Quizzes realizados</p>
-
                 </div>
 
             </div>
@@ -115,27 +104,25 @@
                     <div class="tituloGrafico">
                         <span class="titulo">Desempenho por área</span>
                         <br>
-                        <span>Resultado do último Quiz</span>
+                        <span>Resultado do último quiz</span>
                     </div>
 
                     <div class="grafico">
-
                         <canvas id="myChartCanvas"></canvas>
                     </div>
                 </div>
 
                 <div class="areaGrafico">
                     <div class="tituloGrafico">
-                        <span class="titulo">Total de acertos por dia</span>
+                        <span class="titulo">Quizzes por dia</span>
                         <br>
-                        <span>Resultados do último mês</span>
+                        <span>Últimos 7 dias</span>
                     </div>
                     <div class="grafico">
                         <canvas id="linhasPontosDia"></canvas>
                     </div>
                 </div>
             </div>
-
 
             <!-- Fim Dash -->
         </div>
@@ -146,33 +133,27 @@
 
 <script>
 
-    function exibirAquarios() {
-        JSON.parse(sessionStorage.AQUARIOS).forEach(item => {
-            document.getElementById("cardAquarios").innerHTML += `
-                    <div class="card-aquario">
-                        <div class="title-aquario">
-                            <h1>${item.descricao}</h1>
-                        </div>
-                        <div class="desc-aquario">
-                        <div class="temperatura">
-                            <p id="temp_aquario_${item.id}">-°C</p>
-                        </div>
-                        <div class="cor-alerta" id="card_${item.id}"></div>
-                    </div>
-                    </div>
-                    `
-        });
-    }
+    // ---------- GRÁFICOS ----------
 
+    function plotarGraficoRadar(listaUsuario, listaMedia) {
 
-    function plotarGraficoRadar() {
+        let labels = [];
+        let meusDados = [];
+        let mediaComunidade = [];
 
-        // As 4 áreas do quiz (as pontas do radar)
-        const labels = ['Percepção auditiva', 'Teoria musical', 'Ritmo', 'Harmonia'];
+        for (let i = 0; i < listaUsuario.length; i++) {
+            labels.push(listaUsuario[i].area);
+            meusDados.push(Number(listaUsuario[i].percentual));
 
-        // Dados mocados, em % de acertos (0 a 100) para cada área
-        const meusDados = [67, 100, 100, 100];
-        const mediaComunidade = [60, 70, 65, 72];
+            // procura a média da comunidade para a mesma área
+            let media = 0;
+            for (let j = 0; j < listaMedia.length; j++) {
+                if (listaMedia[j].area == listaUsuario[i].area) {
+                    media = Number(listaMedia[j].mediaPercentual);
+                }
+            }
+            mediaComunidade.push(media);
+        }
 
         const dados = {
             labels: labels,
@@ -185,6 +166,14 @@
                     borderColor: '#4d9dff',
                     pointBackgroundColor: '#0A1440',
                     pointBorderColor: '#ffffff'
+                },
+                {
+                    label: 'Média da comunidade (%)',
+                    data: mediaComunidade,
+                    fill: false,
+                    borderColor: '#0F3F9E',
+                    borderDash: [5, 5],
+                    pointBackgroundColor: '#0F3F9E'
                 }
             ]
         };
@@ -213,24 +202,40 @@
         new Chart(document.getElementById('myChartCanvas'), config);
     }
 
-    function plotarGraficoLinhas() {
+    function plotarGraficoLinhas(lista) {
 
-        // Dados mocados: total de quizzes feitos em cada dia
-        const labels = ['05/11', '06/11', '07/11', '08/11', '09/11', '10/11', '11/11'];
-        const totais = [1, 0, 2, 1, 3, 2, 1];
+        let labels = [];
+        let valores = [];
+
+        // monta os últimos 7 dias; os dias sem quiz ficam com 0
+        for (let i = 6; i >= 0; i--) {
+            let data = new Date();
+            data.setDate(data.getDate() - i);
+            let dia = ("0" + data.getDate()).slice(-2) + "/" + ("0" + (data.getMonth() + 1)).slice(-2);
+
+            let total = 0;
+            for (let j = 0; j < lista.length; j++) {
+                if (lista[j].diaTexto == dia) {
+                    total = lista[j].total;
+                }
+            }
+
+            labels.push(dia);
+            valores.push(total);
+        }
 
         const dados = {
             labels: labels,
             datasets: [
                 {
                     label: 'Quizzes realizados',
-                    data: totais,
+                    data: valores,
                     fill: true,
                     backgroundColor: 'rgba(23, 104, 255, 0.2)',
                     borderColor: '#4d9dff',
                     pointBackgroundColor: '#0A1440',
                     pointBorderColor: '#ffffff',
-                    tension: 0.3                 // deixa a linha levemente curva
+                    tension: 0.3
                 }
             ]
         };
@@ -239,16 +244,18 @@
             type: 'line',
             data: dados,
             options: {
-                maintainAspectRatio: false,      // usa a altura definida no CSS
+                maintainAspectRatio: false,
                 scales: {
                     x: {
                         ticks: { color: '#0A1440' },
-                        grid: { color: '#1a3d8f' }
+                        grid: { display: false },
+                        border: { display: false }
                     },
                     y: {
                         beginAtZero: true,
-                        ticks: { color: '#0A1440', precision: 0 },   // só números inteiros
-                        grid: { color: '#1a3d8f' },
+                        ticks: { color: '#0A1440', precision: 0, stepSize: 1 },
+                        grid: { color: 'rgba(26, 61, 143, 0.25)' },
+                        border: { display: false },
                         title: { display: true, text: 'Quizzes', color: '#9db0d8' }
                     }
                 },
@@ -261,77 +268,105 @@
         new Chart(document.getElementById('linhasPontosDia'), config);
     }
 
-    function carregarDadosDashboard() {
-        const idUsuario = sessionStorage.ID_USUARIO;
-        if (!idUsuario) {
-            // sem sessão -- mantém valores padrões
-            return;
-        }
+    // ---------- LISTAGEM DOS DADOS ----------
 
-        fetch('/quiz/dadosDashboard', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ fkUsuarioServer: idUsuario })
-        }).then(res => res.json()).then(resp => {
-            // percentual geral
-            const percentual = (resp.percentualGeral && resp.percentualGeral[0] && resp.percentualGeral[0].percentualGeral) ? resp.percentualGeral[0].percentualGeral : 0;
-            document.getElementById('percentualKpi').innerText = percentual ? (percentual + '%') : '0%';
+    function listarCardsUsuario() {
+        fetch(`/dados-usuario/listarCardsUsuario/${sessionStorage.ID_USUARIO}`).then(function (resposta) {
 
-            // quizzes realizados
-            const realizados = (resp.quizzesRealizados && resp.quizzesRealizados[0] && resp.quizzesRealizados[0].quizzesRealizados) ? resp.quizzesRealizados[0].quizzesRealizados : 0;
-            document.getElementById('quizzesKpi').innerText = realizados;
-
-            // pior área
-            const pior = (resp.piorAreaUltima && resp.piorAreaUltima[0] && resp.piorAreaUltima[0].area) ? resp.piorAreaUltima[0].area : '-';
-            document.getElementById('piorAreaKpi').innerText = pior || '-';
-
-            // posição no ranking
-            const pos = (resp.posicaoRanking && resp.posicaoRanking[0] && resp.posicaoRanking[0].posicao) ? resp.posicaoRanking[0].posicao : '-';
-            document.getElementById('posicaoKpi').innerText = pos;
-
-            // radar: montar arrays com as 5 áreas (garantindo ordem)
-            const labels = ['Percepção auditiva', 'Teoria musical', 'Ritmo', 'Harmonia', 'Música e mente'];
-            const mapaRadar = {};
-            if (resp.radarUltima) resp.radarUltima.forEach(r => mapaRadar[r.area] = r.percentual);
-
-            const meusDados = labels.map(l => mapaRadar[l] || 0);
-
-            // média comunidade
-            const mapaMedia = {};
-            if (resp.mediaComunidade) resp.mediaComunidade.forEach(m => mapaMedia[m.area] = m.mediaPercentual);
-            const medias = labels.map(l => mapaMedia[l] || 0);
-
-            // cria gráfico radar
-            const dadosRadar = { labels: labels, datasets: [
-                { label: 'Seu desempenho (%)', data: meusDados, fill: true, backgroundColor: 'rgba(23, 104, 255, 0.25)', borderColor: '#4d9dff', pointBackgroundColor: '#0A1440', pointBorderColor: '#ffffff' },
-                { label: 'Média comunidade (%)', data: medias, fill: false, borderColor: '#0A1440', borderDash: [5,5], pointBackgroundColor: '#fff' }
-            ] };
-
-            const configRadar = { type: 'radar', data: dadosRadar, options: { maintainAspectRatio: false, scales: { r: { min: 0, max: 100, ticks: { stepSize: 25, color: '#9db0d8', backdropColor: 'transparent' }, grid: { color: '#0A1440' }, angleLines: { color: '#1a3d8f' }, pointLabels: { color: '#0A1440', font: { size: 14 } } } }, plugins: { legend: { labels: { color: '#0A1440' } } } } };
-            new Chart(document.getElementById('myChartCanvas'), configRadar);
-
-            // linhas: últimos 7 dias
-            const dias = [];
-            const totalsMap = {};
-            if (resp.quizzesPorDia) resp.quizzesPorDia.forEach(d => { totalsMap[d.dia] = d.total });
-            for (let i = 6; i >= 0; i--) {
-                const dt = new Date();
-                dt.setDate(dt.getDate() - i);
-                const dd = ("0"+dt.getDate()).slice(-2);
-                const mm = ("0"+(dt.getMonth()+1)).slice(-2);
-                const yy = (""+dt.getFullYear()).slice(-2);
-                const chave = `${dd}-${mm}-${yy}`; // mesmo formato retornado pelo DB
-                dias.push({ chave, label: chave });
+            if (resposta.status == 204) {
+                return;
             }
 
-            const labelsLinha = dias.map(d => d.label);
-            const totais = dias.map(d => totalsMap[d.chave] || 0);
+            if (!resposta.ok) {
+                throw "Houve um erro na API! Código: " + resposta.status;
+            }
 
-            const dadosLinha = { labels: labelsLinha, datasets: [{ label: 'Quizzes realizados', data: totais, fill: true, backgroundColor: 'rgba(23, 104, 255, 0.2)', borderColor: '#4d9dff', pointBackgroundColor: '#0A1440', pointBorderColor: '#ffffff', tension: 0.3 }] };
-            const configLinha = { type: 'line', data: dadosLinha, options: { maintainAspectRatio: false, scales: { x: { ticks: { color: '#0A1440' }, grid: { color: '#1a3d8f' } }, y: { beginAtZero: true, ticks: { color: '#0A1440', precision: 0 }, grid: { color: '#1a3d8f' }, title: { display: true, text: 'Quizzes', color: '#9db0d8' } } }, plugins: { legend: { labels: { color: '#0A1440' } } } } };
-            new Chart(document.getElementById('linhasPontosDia'), configLinha);
+            resposta.json().then(function (lista) {
+                console.log("Dados recebidos: ", JSON.stringify(lista));
 
-        }).catch(err => console.error('Erro ao carregar dados dashboard', err));
+                let cards = lista[0];
+
+                // quem nunca fez quiz fica com "-" no percentual e na pior área
+                if (cards.percentualGeral != null) {
+                    document.getElementById('percentualKpi').innerHTML = cards.percentualGeral + '%';
+                }
+                if (cards.piorArea != null) {
+                    document.getElementById('piorAreaKpi').innerHTML = cards.piorArea;
+                }
+                document.getElementById('posicaoKpi').innerHTML = '#' + cards.posicaoRanking;
+                document.getElementById('quizzesKpi').innerHTML = cards.qtdQuizzes;
+            });
+
+        }).catch(function (erro) {
+            console.error(erro);
+        });
+    }
+
+    function listarRadarUsuario() {
+        fetch(`/dados-usuario/listarRadarUsuario/${sessionStorage.ID_USUARIO}`).then(function (resposta) {
+
+            if (resposta.status == 204) {
+                plotarGraficoRadar([], []);
+                return;
+            }
+
+            if (!resposta.ok) {
+                throw "Houve um erro na API! Código: " + resposta.status;
+            }
+
+            resposta.json().then(function (listaUsuario) {
+                console.log("Dados recebidos: ", JSON.stringify(listaUsuario));
+                listarMediaAreas(listaUsuario);
+            });
+
+        }).catch(function (erro) {
+            console.error(erro);
+        });
+    }
+
+    // o radar precisa dos dois: os dados do usuário e a média da comunidade
+    function listarMediaAreas(listaUsuario) {
+        fetch("/dados-usuario/listarMediaAreas").then(function (resposta) {
+
+            if (resposta.status == 204) {
+                plotarGraficoRadar(listaUsuario, []);
+                return;
+            }
+
+            if (!resposta.ok) {
+                throw "Houve um erro na API! Código: " + resposta.status;
+            }
+
+            resposta.json().then(function (listaMedia) {
+                console.log("Dados recebidos: ", JSON.stringify(listaMedia));
+                plotarGraficoRadar(listaUsuario, listaMedia);
+            });
+
+        }).catch(function (erro) {
+            console.error(erro);
+        });
+    }
+
+    function listarQuizzesDia() {
+        fetch(`/dados-usuario/listarQuizzesDia/${sessionStorage.ID_USUARIO}`).then(function (resposta) {
+
+            if (resposta.status == 204) {
+                plotarGraficoLinhas([]);
+                return;
+            }
+
+            if (!resposta.ok) {
+                throw "Houve um erro na API! Código: " + resposta.status;
+            }
+
+            resposta.json().then(function (lista) {
+                console.log("Dados recebidos: ", JSON.stringify(lista));
+                plotarGraficoLinhas(lista);
+            });
+
+        }).catch(function (erro) {
+            console.error(erro);
+        });
     }
 </script>
 

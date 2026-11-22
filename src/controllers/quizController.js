@@ -63,41 +63,8 @@ function inserirRespostas(req, res) {
     }
 }
 
-// retorna todos os dados necessários para a dashboard do usuário
-function dadosDashboard(req, res) {
-    var fkUsuario = req.body.fkUsuarioServer;
-
-    if (fkUsuario == undefined) {
-        res.status(400).send("fkUsuario está undefined!");
-        return;
-    }
-
-    Promise.all([
-        quizModel.percentualGeral(fkUsuario),
-        quizModel.quizzesRealizados(fkUsuario),
-        quizModel.radarUltimaTentativa(fkUsuario),
-        quizModel.piorAreaUltimaTentativa(fkUsuario),
-        quizModel.mediaComunidade(),
-        quizModel.quizzesPorDia(fkUsuario),
-        quizModel.posicaoRanking(fkUsuario)
-    ]).then(function (results) {
-        res.json({
-            percentualGeral: results[0],
-            quizzesRealizados: results[1],
-            radarUltima: results[2],
-            piorAreaUltima: results[3],
-            mediaComunidade: results[4],
-            quizzesPorDia: results[5],
-            posicaoRanking: results[6]
-        });
-    }).catch(function (erro) {
-        console.log(erro);
-        res.status(500).json(erro.sqlMessage);
-    });
-}
 
 module.exports = {
     cadastrarQuiz,
-    inserirRespostas,
-    dadosDashboard
+    inserirRespostas
 }

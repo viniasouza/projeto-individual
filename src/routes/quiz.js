@@ -13,8 +13,6 @@ router.post("/listarId", function (req, res) {
 router.post("/inserirRespostas", function (req, res) {
     quizController.inserirRespostas(req, res);
 });
-router.post('/dadosDashboard', function (req, res) {
-    quizController.dadosDashboard(req, res);
-});
+
 
 module.exports = router;
